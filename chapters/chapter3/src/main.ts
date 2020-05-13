@@ -1,5 +1,5 @@
 import Aurelia, { RouterConfiguration, StyleConfiguration } from 'aurelia';
-import { App } from './app';
+import { MainApp } from './main-app';
 import shared from './shared-styles.css';
 
 Aurelia
@@ -8,5 +8,5 @@ Aurelia
     sharedStyles: [shared]
   }))
   .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
-  .app(App)
+  .app(MainApp)
   .start();
