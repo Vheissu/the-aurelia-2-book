@@ -1,12 +1,7 @@
-import Aurelia, { RouterConfiguration, StyleConfiguration } from 'aurelia';
-import { MainApp } from './main-app';
-import shared from './shared-styles.css';
+import Aurelia, { RouterConfiguration } from 'aurelia';
+import { App } from './app';
 
 Aurelia
-  .register(StyleConfiguration.shadowDOM({
-    // optionally add the shared styles for all components
-    sharedStyles: [shared]
-  }))
   .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
-  .app(MainApp)
+  .app(App)
   .start();
