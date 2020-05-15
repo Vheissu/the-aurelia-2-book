@@ -1,0 +1,5 @@
+[
+    { "id": 1, "name": "Cute Kitten", "imageUrl": "http://placekitten.com/200/300" },
+    { "id": 2, "name": "Big One", "imageUrl": "http://placekitten.com/200/300" },
+    { "id": 4, "name": "Territorian", "imageUrl": "http://placekitten.com/200/300" }
+]
