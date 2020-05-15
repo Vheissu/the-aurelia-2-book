@@ -8,8 +8,7 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "aurelia": "dev",
-    "bootstrap": "^4.5.0"
+    "aurelia": "dev"
   },
   "devDependencies": {
     "eslint": "^7.0.0",
