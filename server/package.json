@@ -1,0 +1,22 @@
+{
+  "name": "catstore-server",
+  "version": "1.0.0",
+  "description": "The server backing the catstore.",
+  "main": "app.js",
+  "author": "Dwayne Charrington",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node ."
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/node": "^14.0.1",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
