@@ -1,5 +1,7 @@
 import { HttpClient, json } from '@aurelia/fetch-client';
+import { inject } from 'aurelia';
 
+@inject(HttpClient)
 export class ApiService {
     constructor(private http: HttpClient) {
         http.configure((config) => {
