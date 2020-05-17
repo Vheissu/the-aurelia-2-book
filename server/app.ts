@@ -1,8 +1,11 @@
 import express from 'express';
+import cors from 'cors';
 import sqlite from 'better-sqlite3';
 
 const app = express();
 const port = process.env.PORT || '3002';
+
+app.use(cors());
 
 const db = sqlite('catstore.db');
 
