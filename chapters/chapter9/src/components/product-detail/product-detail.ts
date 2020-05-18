@@ -1,6 +1,6 @@
 import { bindable } from 'aurelia';
 
-export class Product {
+export class ProductDetail {
     @bindable private product;
 
     private addToCart(): void {
