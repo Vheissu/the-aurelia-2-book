@@ -11,7 +11,7 @@
                 <p class="description" textcontent.bind="product.description"></p>
                 <h4 class="price">$${product.price}</h4>
                 <div class="buttons">
-                    <button class="add-to-cart btn btn-primary" type="button" click.delegate="addToCart()">Add to cart</button>
+                    <button class="add-to-cart btn btn-primary" type="button" click.delegate="api.addToCart(product)">Add to cart</button>
                 </div>
             </div>
         </div>
