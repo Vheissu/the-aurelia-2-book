@@ -1,14 +1,14 @@
 <import from="../../components/product/product" />
 
 <div class="container mt-5">
-	<div class="row">
-		<div class="col">
-			<h1>Products</h1>
-			<p>Browse our fine cat imagery and wow yourself with our art.</p>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col">
+            <h1>Products</h1>
+            <p>Browse our fine cat imagery and wow yourself with our art.</p>
+        </div>
+    </div>
 
-	<div class="row">
-		<product class="col-3" repeat.for="product of products" product.bind="product"></product>
-	</div>
+    <div class="row">
+        <product class="col-md-3 col-sm-6" repeat.for="product of products" product.bind="product"></product>
+    </div>
 </div>
