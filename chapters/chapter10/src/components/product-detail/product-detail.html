@@ -1,6 +1,6 @@
 <div class="product">
     <div class="image">
-        <a goto="product(id=${product.id})" class="d-block">
+        <a href="/product(id=${product.id})" class="d-block">
             <img src="http://placekitten.com/255/325" class="img-fluid">
         </a>
         <ul class="social">
@@ -11,7 +11,7 @@
     </div>
 
     <div class="content">
-        <h3 class="title"><a goto="product(id=${product.id})">${product.title}</a></h3>
+        <h3 class="title"><a href="/product(id=${product.id})">${product.title}</a></h3>
         <span class="price">$${product.price}</span>
         <button type="button" class="add-to-cart" click.delegate="api.addToCart(product)">Add To Cart</button>
     </div>
