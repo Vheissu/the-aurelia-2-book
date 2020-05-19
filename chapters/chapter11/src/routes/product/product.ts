@@ -4,6 +4,7 @@ import { inject } from 'aurelia';
 
 @inject(ApiService)
 export class Product implements IRouteableComponent {
+    public static parameters = ['id'];
     private product;
 
     constructor(private api: ApiService) {

@@ -56,6 +56,7 @@ export class ApiService {
         if (itemAlreadyExists) {
             itemAlreadyExists.quantity++;
         } else {
+            product.quantity = 1;
             existingCart.push(product);
         }
 
@@ -70,8 +71,12 @@ export class ApiService {
         let existingCart = this.getCart();
         const itemAlreadyExists = existingCart.find(p => p.id === productId);
 
-        if (itemAlreadyExists) {
+        if (itemAlreadyExists && itemAlreadyExists.quantity > 0) {
             itemAlreadyExists.quantity--;
+
+            if (!itemAlreadyExists.quantity) {
+                existingCart = existingCart.filter((product) => product.id !== productId);
+            }
         } else {
             existingCart = existingCart.filter((product) => product.id !== productId);
         }
