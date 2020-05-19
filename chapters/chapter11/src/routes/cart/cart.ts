@@ -1,6 +1,7 @@
 import { ApiService } from './../../services/api-service';
-import { IViewModel } from 'aurelia';
+import { IViewModel, inject } from 'aurelia';
 
+@inject(ApiService)
 export class Cart implements IViewModel {
     private cart = [];
     private total = 0.00;
@@ -31,7 +32,7 @@ export class Cart implements IViewModel {
 
     private calculateTotal(): void {
         this.total = this.cart.reduce((runningTotal, product) => {
-            const total = product.quantity * product.price;
+            const total = parseInt(product.quantity) * product.price;
 
             return runningTotal + total;
         }, 0).toFixed(2);

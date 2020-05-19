@@ -22,7 +22,7 @@ export class ApiService {
         const cart = this.getCart();
 
         return cart.reduce((runningTotal, product) => {
-            return runningTotal + product.quantity;
+            return runningTotal + parseInt(product.quantity);
         }, 0);
     }
 
