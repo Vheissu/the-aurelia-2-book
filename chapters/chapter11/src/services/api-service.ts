@@ -18,6 +18,14 @@ export class ApiService {
         return JSON.parse(localStorage.getItem('cart')) ?? [];
     }
 
+    public getCartTotal(): number {
+        const cart = this.getCart();
+
+        return cart.reduce((runningTotal, product) => {
+            return runningTotal + product.quantity;
+        }, 0);
+    }
+
     // Gets all projects from the API
     async getProducts(): Promise<any[]> {
         const response = await this.http.get('/products');
@@ -51,15 +59,20 @@ export class ApiService {
 
     public addToCart(product: any): any[] {
         const existingCart = this.getCart();
+
+        // Do we already have this product in our cart?
         const itemAlreadyExists = existingCart.find(p => p.id === product.id);
 
+        // If we already have a product, increment the quantity
         if (itemAlreadyExists) {
             itemAlreadyExists.quantity++;
         } else {
+            // This is a new product, set quantity to 1
             product.quantity = 1;
             existingCart.push(product);
         }
 
+        // Save the cart
         localStorage.setItem('cart', JSON.stringify(existingCart));
 
         this.ea.publish('cart:add', product.id);
@@ -69,18 +82,22 @@ export class ApiService {
 
     public removeFromCart(productId: number): any[] {
         let existingCart = this.getCart();
+
+        // Do we already have this product in our cart?
         const itemAlreadyExists = existingCart.find(p => p.id === productId);
 
+        // We have this item in our cart and the quantity is greater than zero
         if (itemAlreadyExists && itemAlreadyExists.quantity > 0) {
             itemAlreadyExists.quantity--;
 
+            // Did removing the item just set the quantity to zero?
             if (!itemAlreadyExists.quantity) {
+                // Remove the item completely
                 existingCart = existingCart.filter((product) => product.id !== productId);
             }
-        } else {
-            existingCart = existingCart.filter((product) => product.id !== productId);
         }
 
+        // Save the cart
         localStorage.setItem('cart', JSON.stringify(existingCart));
 
         this.ea.publish('cart:remove', productId);

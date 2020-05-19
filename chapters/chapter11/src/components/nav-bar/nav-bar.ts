@@ -4,7 +4,7 @@ import { inject, EventAggregator, IDisposable } from 'aurelia';
 
 @inject(ApiService, EventAggregator)
 export class NavBar implements ICustomElementViewModel {
-    private cart = [];
+    private cartTotal = 0;
 
     private cartAddSubscription: IDisposable;
     private cartRemoveSubscription: IDisposable;
@@ -14,14 +14,14 @@ export class NavBar implements ICustomElementViewModel {
     }
 
     beforeBind(): void {
-        this.cart = this.api.getCart();
+        this.cartTotal = this.api.getCartTotal();
 
         this.cartAddSubscription = this.ea.subscribe('cart:add', () => {
-            this.cart = this.api.getCart();
+            this.cartTotal = this.api.getCartTotal();
         });
 
         this.cartRemoveSubscription = this.ea.subscribe('cart:remove', () => {
-            this.cart = this.api.getCart();
+            this.cartTotal = this.api.getCartTotal();
         });
     }
 }
