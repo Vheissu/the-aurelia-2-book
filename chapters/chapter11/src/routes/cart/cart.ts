@@ -11,4 +11,10 @@ export class Cart implements IViewModel {
     beforeBind(): void {
         this.cart = this.api.getCart();
     }
+
+    private removeFromCart(id: number): void {
+        this.api.removeFromCart(id);
+
+        this.cart = this.api.getCart();
+    }
 }

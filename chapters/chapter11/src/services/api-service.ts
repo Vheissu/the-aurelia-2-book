@@ -51,8 +51,13 @@ export class ApiService {
 
     public addToCart(product: any): any[] {
         const existingCart = this.getCart();
+        const itemAlreadyExists = existingCart.find(p => p.id === product.id);
 
-        existingCart.push(product);
+        if (itemAlreadyExists) {
+            itemAlreadyExists.quantity++;
+        } else {
+            existingCart.push(product);
+        }
 
         localStorage.setItem('cart', JSON.stringify(existingCart));
 
@@ -63,8 +68,13 @@ export class ApiService {
 
     public removeFromCart(productId: number): any[] {
         let existingCart = this.getCart();
+        const itemAlreadyExists = existingCart.find(p => p.id === productId);
 
-        existingCart = existingCart.filter((product) => product.id !== productId);
+        if (itemAlreadyExists) {
+            itemAlreadyExists.quantity--;
+        } else {
+            existingCart = existingCart.filter((product) => product.id !== productId);
+        }
 
         localStorage.setItem('cart', JSON.stringify(existingCart));
 
