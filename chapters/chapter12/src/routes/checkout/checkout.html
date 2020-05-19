@@ -1,0 +1,62 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <main>
+                <div class="col-md-8 col-md-offset-2">
+                    <h2 class="text-center">Meow! Let's checkout</h2>
+                    <hr>
+                    <div class="cart">
+                        <form class="form-horizontal" role="form" action="" method="POST" id="checkout-form">
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a type="button" data-toggle="collapse" data-parent="#accordion"
+                                                data-target="#section1" href="javascript:void(0);">Review Order</a>
+                                        </h4>
+                                    </div>
+                                    <div id="section1" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="items">
+                                                <div class="col-md-9">
+                                                    <table class="table table-striped">
+                                                        <tr repeat.for="product of cart">
+                                                            <td>
+                                                                <a class="btn btn-warning btn-sm pull-right"
+                                                                    title="Remove">X</a>
+                                                                <strong>${product.title}</strong>
+                                                            </td>
+                                                            <td><strong>$${product.quantity * product.price}</strong>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="text-centre">
+                                                        <h3>Order Total</h3>
+                                                        <h3><span class="text-success">$147.00</span></h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <div class="text-center"><a data-toggle="collapse" data-parent="#accordion" data-target="#billingInfo"
+                                                    href="javascript:void(0);" class=" btn btn-success"
+                                                    onclick="$(this).fadeOut(); $('#payInfo').fadeIn();">Continue
+                                                    to Billing Information»</a></div>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>

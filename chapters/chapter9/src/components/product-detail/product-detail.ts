@@ -11,8 +11,10 @@ export class ProductDetail implements ICustomElementViewModel {
     }
 
     public async beforeBind(): Promise<void> {
-        const loadImage = (await this.http.fetch('https://api.thecatapi.com/v1/images/search')).json();
-        this.image = loadImage[0].url;
+        const request = await this.http.fetch('https://api.thecatapi.com/v1/images/search?mime_types=jpg');
+        const response = await request.json();
+
+        this.image = response[0].url;
     }
 
     private addToCart(): void {
