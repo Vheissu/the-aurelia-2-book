@@ -1,7 +1,10 @@
-<import from="./components/nav-bar/nav-bar"></import>
+<import from="./welcome"></import>
 <import from="./about.html"></import>
 <import from="./missing"></import>
 
-<nav-bar></nav-bar>
+<nav>
+  <a goto="welcome">Welcome</a>
+  <a goto="about">About</a>
+</nav>
 
-<au-viewport default="home" fallback="missing"></au-viewport>
+<au-viewport default="welcome" fallback="missing"></au-viewport>

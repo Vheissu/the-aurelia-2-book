@@ -44,14 +44,4 @@ export class ApiService {
 
         return response.json();
     }
-
-    addToCart(product: any): any[] {
-        const existingCart = JSON.parse(localStorage.getItem('cart')) ?? [];
-
-        existingCart.push(product);
-
-        localStorage.setItem('cart', JSON.stringify(existingCart));
-
-        return existingCart;
-    }
 }

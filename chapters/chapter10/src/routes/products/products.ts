@@ -1,6 +1,5 @@
 import { ApiService } from './../../services/api-service';
 import { IViewModel } from 'aurelia';
-
 export class Products implements IViewModel {
     private products = [];
 

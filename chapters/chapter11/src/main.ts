@@ -1,4 +1,3 @@
-import { Cart } from './routes/cart/cart';
 import { Product } from './routes/product/product';
 import { Products } from './routes/products/products';
 import { Home } from './routes/home/home';
@@ -11,7 +10,6 @@ Aurelia
     Home,
     Products,
     Product,
-    Cart,
     RouterConfiguration.customize({ useUrlFragmentHash: false })
   )
   .app(App)

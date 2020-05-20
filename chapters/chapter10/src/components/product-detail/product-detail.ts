@@ -1,13 +1,12 @@
-import { ApiService } from '../../services/api-service';
-import { bindable, inject, HttpClient } from 'aurelia';
+import { ICustomElementViewModel } from '@aurelia/runtime';
+import { bindable, HttpClient } from 'aurelia';
 
-@inject(ApiService, HttpClient)
-export class ProductDetail {
+export class ProductDetail implements ICustomElementViewModel {
     @bindable private product;
 
     private image;
 
-    constructor(private api: ApiService, private http: HttpClient) {
+    constructor(private http: HttpClient) {
 
     }
 
@@ -16,5 +15,13 @@ export class ProductDetail {
         const response = await request.json();
 
         this.image = response[0].url;
+    }
+
+    private addToCart(): void {
+        const existingCart = JSON.parse(localStorage.getItem('cart')) ?? [];
+
+        existingCart.push(this.product);
+
+        localStorage.setItem('cart', JSON.stringify(existingCart));
     }
 }
