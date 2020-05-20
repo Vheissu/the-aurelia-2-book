@@ -3,8 +3,8 @@ import { IRouteableComponent } from '@aurelia/router';
 import { inject } from 'aurelia';
 import { newInstanceForScope } from '@aurelia/kernel';
 
-import { IValidationRules, ValidationRules } from '@aurelia/validation';
-import { IValidationController } from '@aurelia/validation-html';
+import { IValidationRules } from '@aurelia/validation';
+import { IValidationController, ValidationResultPresenterService } from '@aurelia/validation-html';
 
 @inject(ApiService)
 export class Checkout implements IRouteableComponent {
@@ -17,18 +17,23 @@ export class Checkout implements IRouteableComponent {
         country: '',
         state: '',
         zip: '',
-        paymentType: '',
+        paymentType: 'credit',
         ccName: '',
         ccNumber: '',
         ccExpiration: '',
         ccCvv: ''
     };
 
+    private presenter: ValidationResultPresenterService;
+
     private cart = [];
     private total;
     private totalItems = 0;
 
     constructor(private api: ApiService, @newInstanceForScope(IValidationController) private validationController: IValidationController, @IValidationRules validationRules: IValidationRules) {
+        this.presenter = new ValidationResultPresenterService();
+        this.validationController.addSubscriber(this.presenter);
+        
         validationRules
             .on(this.details)
             .ensure('firstName')
@@ -36,8 +41,8 @@ export class Checkout implements IRouteableComponent {
             .ensure('lastName')
                 .required()
             .ensure('email')
-                .email()
                 .required()
+                .email()
             .ensure('address')
                 .required()
             .ensure('country')
@@ -67,6 +72,12 @@ export class Checkout implements IRouteableComponent {
         this.totalItems = this.api.getCartTotal();
 
         this.calculateTotal();
+    }
+
+    public async submit(): Promise<void> {
+        const result = await this.validationController.validate();
+
+        console.log(result);
     }
 
     private calculateTotal(): void {
