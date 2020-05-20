@@ -1,18 +1,7 @@
-import { Cart } from './routes/cart/cart';
-import { Product } from './routes/product/product';
-import { Products } from './routes/products/products';
-import { Home } from './routes/home/home';
-
 import Aurelia, { RouterConfiguration } from 'aurelia';
 import { App } from './app';
 
 Aurelia
-  .register(
-    Home,
-    Products,
-    Product,
-    Cart,
-    RouterConfiguration.customize({ useUrlFragmentHash: false })
-  )
+  .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
   .app(App)
   .start();
