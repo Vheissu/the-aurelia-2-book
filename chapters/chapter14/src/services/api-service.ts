@@ -59,13 +59,13 @@ export class ApiService {
 
     // A login method to verify a users login credentials
     async login(username: string, password: string): Promise<any> {
-        const response = await this.http.post('/user', json({ username, password}));
+        const response = await this.http.post('/user', json({username, password}));
 
         return response.json();
     }
 
     async register(username: string, password: string): Promise<any> {
-        const response = await this.http.post('/register', json({ username, password }));
+        const response = await this.http.post('/register', json({username, password}));
 
         return response.json();
     }
