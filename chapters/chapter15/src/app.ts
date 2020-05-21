@@ -14,7 +14,7 @@ export class App implements IViewModel {
         // User is not logged in, so redirect them back to login page
         return [this.router.createViewportInstruction('login', instructions[0].viewport)];
     }, {
-      include: ['dashboard', 'orders'],
+      include: ['dashboard', 'orders', 'order'],
     });
   }
 }
