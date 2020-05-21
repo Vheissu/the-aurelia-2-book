@@ -47,6 +47,16 @@ export class ApiService {
         return response.json();
     }
 
+    async processOrder(userId: string | number, checkoutFields: any, cart: any[]): Promise<any> {
+        const response = await this.http.post('/processOrder', json({
+            userId: userId,
+            checkoutFields,
+            cart
+        }));
+
+        return response.json();
+    }
+
     // A login method to verify a users login credentials
     async login(username: string, password: string): Promise<any> {
         const response = await this.http.post('/user', json({

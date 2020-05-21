@@ -1,10 +1,12 @@
 import { ApiService } from '../../services/api-service';
 import { IRouteableComponent } from '@aurelia/router';
 import { inject } from 'aurelia';
-import { newInstanceForScope } from '@aurelia/kernel';
 
+import { newInstanceForScope } from '@aurelia/kernel';
 import { IValidationRules } from '@aurelia/validation';
 import { IValidationController, ValidationResultPresenterService } from '@aurelia/validation-html';
+
+const sleep = (ms: number) => setTimeout(() => Promise.resolve(), ms);
 
 @inject(ApiService)
 export class Checkout implements IRouteableComponent {
@@ -23,6 +25,8 @@ export class Checkout implements IRouteableComponent {
         ccExpiration: '',
         ccCvv: ''
     };
+
+    private processing = false;
 
     private presenter: ValidationResultPresenterService;
 
@@ -77,7 +81,9 @@ export class Checkout implements IRouteableComponent {
     public async submit(): Promise<void> {
         const result = await this.validationController.validate();
 
-        console.log(result);
+        if (result.valid) {
+            await this.api.processOrder(1, this.details, this.cart);
+        }
     }
 
     private calculateTotal(): void {
