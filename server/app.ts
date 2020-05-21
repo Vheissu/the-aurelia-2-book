@@ -29,11 +29,29 @@ app.get('/product/:id', (req, res) => {
     res.json(row);
 });
 
-app.get('/orders', (req, res) => {
+app.post('/orders', (req, res) => {
     const userId = req.params.userId;
     const orders = db.prepare('SELECT * from orders WHERE userId = ?').get(userId);
 
     res.json(orders);
+});
+
+app.post('/processOrder', (req, res) => {
+    const userId = parseInt(req.params.userId);
+    const fields = JSON.parse(req.params.checkoutFields);
+    const cart = JSON.parse(req.params.cart);
+
+    // We only want to save the last 4 digits
+    fields.ccNumber = fields.ccNumber.toString().substr(-4);
+
+    const productIds = cart.reduce((ids, product) => {
+        ids.push(product.id);
+        return ids;
+    }, []);
+
+    const insert = db.prepare(`INSERT INTO orders (id, productIds, userId, firstName, lastName, email, date) VALUES(null, ${productIds.join(',')}, ${userId}, ${fields.firstName}, ${fields.lastName}, ${fields.email}, ${new Date()})`).run();
+
+    res.json({ orderId: insert.lastInsertRowid, success: true });
 });
 
 app.post('/user', (req, res) => {
