@@ -40,6 +40,23 @@ app.post('/orders', (req, res) => {
     res.json(orders);
 });
 
+app.post('/register', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    const userExists = db.prepare('SELECT username FROM users WHERE username = ?').get(username);
+
+    if (!userExists) {
+        const insert = db.prepare(`INSERT INTO users (username, password) VALUES('${username}', '${password}')`).run();
+
+        if (insert) {
+            res.json({ username, success: true });
+        }
+    } else {
+        res.json({ success: false, message: 'User already registered' });
+    }
+});
+
 app.post('/processOrder', (req, res) => {
     const userId = parseInt(req.body.userId);
     const fields: any = req.body.checkoutFields;
@@ -64,7 +81,7 @@ app.post('/user', (req, res) => {
     const username = req.params.username;
     const password = req.params.password;
 
-    const user = db.prepare('SELECT * from users WHERE username = ? AND password = ?').get(username, password);
+    const user = db.prepare('SELECT * FROM users WHERE username = ? AND password = ?').get(username, password);
 
     if (user) {
         res.status(200).json(user);
