@@ -82,7 +82,12 @@ export class Checkout implements IRouteableComponent {
         const result = await this.validationController.validate();
 
         if (result.valid) {
-            await this.api.processOrder(1, this.details, this.cart);
+            this.processing = true;
+    
+            await sleep(1500); // wait 1.5 seconds before going to the server
+            const order = await this.api.processOrder(1, this.details, this.cart);
+    
+            this.processing = false;
         }
     }
 
