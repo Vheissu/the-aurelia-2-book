@@ -1,18 +1,18 @@
 <div class="container mt-5">
-    <div class="row mb-5">
+    <div class="row mb-3">
         <div class="col-md-12">
             <h1>Order #${order.id}</h1>
             <p><strong>Date ordered:</strong> ${order.date | formatDate} | <strong>Total:</strong> $${order.total}</p>
         </div>
     </div>
 
-    <div class="row mb-5">
+    <div class="row mb-3">
         <div class="col-md-12">
             <h2>Order Summary</h2>
             <ul>
                 <li repeat.for="product of order.cart">
                     ${product.title}<br>
-                    $${product.price * product.quantity)}
+                    $${product.price * product.quantity}
                 </li>
             </ul>
         </div>
