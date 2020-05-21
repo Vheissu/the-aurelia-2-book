@@ -1,0 +1,10 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>My Orders</h1>
+            <ul>
+                <li repeat.for="order of orders"><a goto="/order(${order.id})">Order #${order.id}</a></li>
+            </ul>
+        </div>
+    </ul>
+</div>
