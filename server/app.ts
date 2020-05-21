@@ -43,6 +43,8 @@ app.post('/orders', (req, res) => {
 app.post('/order', (req, res) => {
     const row = db.prepare('SELECT * FROM orders WHERE userId = ? AND id = ?').get(req.body.userId, req.body.orderId);
 
+    row.quantity = parseInt(row.quantity);
+
     res.json(row);
 });
 
