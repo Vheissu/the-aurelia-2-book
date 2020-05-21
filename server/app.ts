@@ -49,7 +49,9 @@ app.post('/processOrder', (req, res) => {
         return ids;
     }, []);
 
-    const insert = db.prepare(`INSERT INTO orders (id, productIds, userId, firstName, lastName, email, date) VALUES(null, ${productIds.join(',')}, ${userId}, ${fields.firstName}, ${fields.lastName}, ${fields.email}, ${new Date()})`).run();
+    const insert = db.prepare(`INSERT INTO orders (id, productIds, userId, firstName, lastName, email, address, address2, country, state, zip, paymentType, ccName, ccNumber, date) 
+        VALUES(null, ${productIds.join(',')}, ${userId}, ${fields.firstName}, ${fields.lastName}, ${fields.email}, ${fields.address}, ${fields.address2}, ${fields.country}, ${fields.state}, ${fields.zip}, ${fields.paymentType}, ${fields.ccName}, ${fields.ccNumber}, ${new Date()})`)
+    .run();
 
     res.json({ orderId: insert.lastInsertRowid, success: true });
 });
