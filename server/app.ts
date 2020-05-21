@@ -1,11 +1,15 @@
 import express from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import sqlite from 'better-sqlite3';
 
 const app = express();
 const port = process.env.PORT || '3002';
 
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
 
 const db = sqlite('catstore.db');
 
@@ -30,16 +34,16 @@ app.get('/product/:id', (req, res) => {
 });
 
 app.post('/orders', (req, res) => {
-    const userId = req.params.userId;
+    const userId = req.body.userId;
     const orders = db.prepare('SELECT * from orders WHERE userId = ?').get(userId);
 
     res.json(orders);
 });
 
 app.post('/processOrder', (req, res) => {
-    const userId = parseInt(req.params.userId);
-    const fields = JSON.parse(req.params.checkoutFields);
-    const cart = JSON.parse(req.params.cart);
+    const userId = parseInt(req.body.userId);
+    const fields: any = req.body.checkoutFields;
+    const cart: any = req.body.cart;
 
     // We only want to save the last 4 digits
     fields.ccNumber = fields.ccNumber.toString().substr(-4);
@@ -49,8 +53,8 @@ app.post('/processOrder', (req, res) => {
         return ids;
     }, []);
 
-    const insert = db.prepare(`INSERT INTO orders (id, productIds, userId, firstName, lastName, email, address, address2, country, state, zip, paymentType, ccName, ccNumber, date) 
-        VALUES(null, ${productIds.join(',')}, ${userId}, ${fields.firstName}, ${fields.lastName}, ${fields.email}, ${fields.address}, ${fields.address2}, ${fields.country}, ${fields.state}, ${fields.zip}, ${fields.paymentType}, ${fields.ccName}, ${fields.ccNumber}, ${new Date()})`)
+    const insert = db.prepare(`INSERT INTO orders (productIds, userId, firstName, lastName, email, address, address2, country, state, zip, paymentType, ccName, ccNumber, date) 
+        VALUES('${productIds.join(',')}', '${userId}', '${fields.firstName}', '${fields.lastName}', '${fields.email}', '${fields.address}', '${fields.address2}', '${fields.country}', '${fields.state}', '${fields.zip}', '${fields.paymentType}', '${fields.ccName}', '${fields.ccNumber}', '${new Date()}')`)
     .run();
 
     res.json({ orderId: insert.lastInsertRowid, success: true });
