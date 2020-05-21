@@ -19,6 +19,8 @@ export class Order implements IRouteableComponent {
             if (this.order.cart) {
                 this.order.cart = JSON.parse(this.order.cart) ?? [];
             }
+
+            console.log(this.order);
         }
     }
 }
