@@ -35,9 +35,15 @@ app.get('/product/:id', (req, res) => {
 
 app.post('/orders', (req, res) => {
     const userId = req.body.userId;
-    const orders = db.prepare('SELECT * from orders WHERE userId = ?').get(userId);
+    const orders = db.prepare('SELECT * FROM orders WHERE userId = ?').all(userId) ?? [];
 
     res.json(orders);
+});
+
+app.post('/order', (req, res) => {
+    const row = db.prepare('SELECT * FROM orders WHERE userId = ? AND id = ?').get(req.body.userId, req.body.orderId);
+
+    res.json(row);
 });
 
 app.post('/register', (req, res) => {
@@ -81,7 +87,7 @@ app.post('/user', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const user = db.prepare('SELECT username FROM users WHERE username = ? AND password = ?').get(username, password);
+    const user = db.prepare('SELECT id, username FROM users WHERE username = ? AND password = ?').get(username, password);
 
     if (user) {
         res.status(200).json(user);
