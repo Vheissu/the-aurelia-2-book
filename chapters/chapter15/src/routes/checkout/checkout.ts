@@ -1,6 +1,6 @@
+import { AuthService } from '../../services/auth-service';
 import { ApiService } from '../../services/api-service';
 import { IRouteableComponent, IRouter } from '@aurelia/router';
-import { inject } from 'aurelia';
 
 import { newInstanceForScope } from '@aurelia/kernel';
 import { IValidationRules } from '@aurelia/validation';
@@ -8,7 +8,6 @@ import { IValidationController, ValidationResultPresenterService } from '@aureli
 
 const sleep = (ms: number) => setTimeout(() => Promise.resolve(), ms);
 
-@inject(ApiService)
 export class Checkout implements IRouteableComponent {
     private details = {
         firstName: '',
@@ -34,7 +33,7 @@ export class Checkout implements IRouteableComponent {
     private total;
     private totalItems = 0;
 
-    constructor(private api: ApiService, @IRouter private router: IRouter, @newInstanceForScope(IValidationController) private validationController: IValidationController, @IValidationRules validationRules: IValidationRules) {
+    constructor(private api: ApiService, private auth: AuthService, @IRouter private router: IRouter, @newInstanceForScope(IValidationController) private validationController: IValidationController, @IValidationRules validationRules: IValidationRules) {
         this.presenter = new ValidationResultPresenterService();
         this.validationController.addSubscriber(this.presenter);
         
@@ -85,7 +84,7 @@ export class Checkout implements IRouteableComponent {
             this.processing = true;
     
             await sleep(1500); // wait 1.5 seconds before going to the server
-            const order: { orderId: number; success: boolean } = await this.api.processOrder(1, this.details, this.cart);
+            const order: { orderId: number; success: boolean } = await this.api.processOrder(this.auth.getCurrentUser().id, this.details, this.cart);
     
             if (order.success) {
                 this.router.goto(`/order(${order.orderId})`);

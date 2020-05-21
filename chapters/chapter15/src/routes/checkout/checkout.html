@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <div class="row">
+    <div class="row" if.bind="auth.isLoggedIn">
         <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Your cart</span>
@@ -113,5 +113,8 @@
                 <button class="btn btn-primary btn-lg btn-block" type="submit" disabled.bind="processing">Place Order</button>
             </form>
         </div>
+    </div>
+    <div class="row" else>
+        <p><strong>Only logged in users can checkout.</strong> Please <a goto="/login">login</a> or <a goto="/register">register</a> to continue. Don't worry, your cart will be safe</p>
     </div>
 </div>
