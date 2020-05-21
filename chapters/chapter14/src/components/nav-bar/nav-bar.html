@@ -11,5 +11,14 @@
         <li class="nav-item">
             <a class="nav-link" goto="cart">Cart (${cartTotal})</a>
         </li>
+        <li class="nav-item" if.bind="!auth.isLoggedIn">
+            <a class="nav-link" goto="login">Login</a>
+        </li>
+        <li class="nav-item" if.bind="!auth.isLoggedIn">
+            <a class="nav-link" goto="register">Register</a>
+        </li>
+        <li class="nav-item" if.bind="auth.isLoggedIn">
+            <a class="nav-link" click.trigger="logout()">Logout</a>
+        </li>
     </ul>
 </nav>
