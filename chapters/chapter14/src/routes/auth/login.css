@@ -1,15 +1,8 @@
-.form {
-    width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
-}
-
 .form .checkbox {
     font-weight: 400;
 }
 
-.form .form-control {
+.form .control {
     position: relative;
     box-sizing: border-box;
     height: auto;
