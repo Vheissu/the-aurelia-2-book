@@ -1,5 +1,5 @@
 import { ApiService } from '../../services/api-service';
-import { IRouteableComponent } from '@aurelia/router';
+import { IRouteableComponent, IRouter } from '@aurelia/router';
 import { inject } from 'aurelia';
 
 import { newInstanceForScope } from '@aurelia/kernel';
@@ -34,7 +34,7 @@ export class Checkout implements IRouteableComponent {
     private total;
     private totalItems = 0;
 
-    constructor(private api: ApiService, @newInstanceForScope(IValidationController) private validationController: IValidationController, @IValidationRules validationRules: IValidationRules) {
+    constructor(private api: ApiService, @IRouter private router: IRouter, @newInstanceForScope(IValidationController) private validationController: IValidationController, @IValidationRules validationRules: IValidationRules) {
         this.presenter = new ValidationResultPresenterService();
         this.validationController.addSubscriber(this.presenter);
         
@@ -80,12 +80,16 @@ export class Checkout implements IRouteableComponent {
 
     public async submit(): Promise<void> {
         const result = await this.validationController.validate();
-
+    
         if (result.valid) {
             this.processing = true;
     
             await sleep(1500); // wait 1.5 seconds before going to the server
-            const order = await this.api.processOrder(1, this.details, this.cart);
+            const order: { orderId: number; success: boolean } = await this.api.processOrder(1, this.details, this.cart);
+    
+            if (order.success) {
+                this.router.goto(`/orders(${order.orderId})`);
+            }
     
             this.processing = false;
         }
