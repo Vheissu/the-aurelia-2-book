@@ -71,14 +71,15 @@ app.post('/processOrder', (req, res) => {
     // We only want to save the last 4 digits
     fields.ccNumber = fields.ccNumber.toString().substr(-4);
 
-    const productIds = cart.reduce((ids, product) => {
-        ids.push(product.id);
-        return ids;
-    }, []);
+    const total = cart.reduce((runningTotal, product) => {
+        const total = parseInt(product.quantity) * product.price;
 
-    const insert = db.prepare(`INSERT INTO orders (productIds, userId, firstName, lastName, email, address, address2, country, state, zip, paymentType, ccName, ccNumber, date) 
-        VALUES('${productIds.join(',')}', '${userId}', '${fields.firstName}', '${fields.lastName}', '${fields.email}', '${fields.address}', '${fields.address2}', '${fields.country}', '${fields.state}', '${fields.zip}', '${fields.paymentType}', '${fields.ccName}', '${fields.ccNumber}', '${new Date()}')`)
-    .run();
+        return runningTotal + total;
+    }, 0).toFixed(2);
+
+    const insert = db.prepare(`INSERT INTO orders (cart, total, userId, firstName, lastName, email, address, address2, country, state, zip, paymentType, ccName, ccNumber, date) 
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+    .run(`${JSON.stringify(cart)}`, `${total}`, `${userId}`, `${fields.firstName}`, `${fields.lastName}`, `${fields.email}`, `${fields.address}`, `${fields.address2}`, `${fields.country}`, `${fields.state}`, `${fields.zip}`, `${fields.paymentType}`, `${fields.ccName}`, `${fields.ccNumber}`, `${new Date()}`);
 
     res.json({ orderId: insert.lastInsertRowid, success: true });
 });
