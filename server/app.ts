@@ -78,10 +78,10 @@ app.post('/processOrder', (req, res) => {
 });
 
 app.post('/user', (req, res) => {
-    const username = req.params.username;
-    const password = req.params.password;
+    const username = req.body.username;
+    const password = req.body.password;
 
-    const user = db.prepare('SELECT * FROM users WHERE username = ? AND password = ?').get(username, password);
+    const user = db.prepare('SELECT username FROM users WHERE username = ? AND password = ?').get(username, password);
 
     if (user) {
         res.status(200).json(user);
