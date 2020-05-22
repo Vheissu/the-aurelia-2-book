@@ -1,17 +1,18 @@
 <div class="search ${showing ? 'showing-search' : 'hidden-search'}" keydown.trigger="keypress($event)">
     <div class="container search-container mt-5">
         <div class="row">
-            <div class="col-md-12">
-                <h1>Search</h1>
-
-                <input type="search" class="form-control form-control-lg" value.bind="searchValue" input.trigger="search() & debounce:300" placeholder="Search for something...">
+            <div class="col-md-12 text-center">
+                <form class="form-inline d-flex justify-content-center mt-0 coloured-inputs">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <input class="form-control form-control-lg ml-3 w-75" type="search" value.bind="searchValue" input.trigger="search() & debounce:300" placeholder="Search for something..." aria-label="Search">
+                </form>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 d-flex flex-column align-items-center justify-content-center mt-4">
                 <h4 if.bind="searchValue !== ''">Results</h4>
-                <ul if.bind="searchValue !== '' && results.length">
-                    <li repeat.for="item of results"><a goto="/product(${item.id})">${item.title}</a></li>
+                <ul class="list-unstyled" if.bind="searchValue !== '' && results.length">
+                    <li repeat.for="item of results" click.trigger="resultClick()"><a goto="/product(${item.id})">${item.title}</a></li>
                 </ul>
                 <p if.bind="searchValue !== '' && !results.length">No search results found.</p>
             </div>

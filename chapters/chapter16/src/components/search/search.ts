@@ -24,6 +24,12 @@ export class Search implements ICustomElementViewModel {
     }
 
     async search() {
-        this.results = await this.api.search(this.searchValue);
+        if (this.searchValue.length >= 3) {
+            this.results = await this.api.search(this.searchValue);
+        }
+    }
+
+    resultClick(): void {
+        this.showing = false;
     }
 }

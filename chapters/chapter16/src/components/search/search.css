@@ -15,3 +15,18 @@
 .hidden-search {
     display: none !important;
 }
+
+.coloured-inputs {
+    color: #4DD0E1;
+}
+
+.coloured-inputs input[type="search"] {
+    border-bottom: 1px solid #4DD0E1;
+    box-shadow: 0 1px 0 0 #4DD0E1;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    color: #FFF;
+}
