@@ -26,6 +26,7 @@ export class ApiService {
         }, 0);
     }
 
+    // Search by keyword
     async search(term: string): Promise<any[]> {
         const response = await this.http.post('/search', json({ query: term }));
         
