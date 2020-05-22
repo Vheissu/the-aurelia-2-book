@@ -1,0 +1,17 @@
+.search {
+    background: rgba(0, 0, 0, 0.95);
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 999;
+}
+
+.search-container {
+    color: #FFF;
+}
+
+.hidden-search {
+    display: none !important;
+}

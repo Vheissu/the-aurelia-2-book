@@ -1,0 +1,20 @@
+<div class="search ${showing ? 'showing-search' : 'hidden-search'}" keydown.trigger="keypress($event)">
+    <div class="container search-container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Search</h1>
+
+                <input type="search" class="form-control form-control-lg" value.bind="searchValue" input.trigger="search() & debounce:300" placeholder="Search for something...">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4 if.bind="searchValue !== ''">Results</h4>
+                <ul if.bind="searchValue !== '' && results.length">
+                    <li repeat.for="item of results"><a goto="/product(${item.id})">${item.title}</a></li>
+                </ul>
+                <p if.bind="searchValue !== '' && !results.length">No search results found.</p>
+            </div>
+        </div>
+    </div>
+</div>
