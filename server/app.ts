@@ -33,6 +33,14 @@ app.get('/product/:id', (req, res) => {
     res.json(row);
 });
 
+app.post('/search', (req, res) => {
+    const query = req.body.query;
+
+    const rows = db.prepare(`SELECT * from products WHERE title LIKE ?`).all(`%${query}%`);
+
+    res.json(rows);
+})
+
 app.post('/orders', (req, res) => {
     const userId = req.body.userId;
     const orders = db.prepare('SELECT * FROM orders WHERE userId = ?').all(userId) ?? [];
