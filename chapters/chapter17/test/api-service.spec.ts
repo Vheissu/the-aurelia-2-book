@@ -47,8 +47,6 @@ describe('API Service', () => {
     test('API threw an error trying to perform search', async () => {
         fetchMock.mockReject(new Error('server had an error'));
 
-        const results = await sut.search('test term');
-
-        console.log(results);
+        await expect(sut.search('test term')).rejects.toEqual(new Error('server had an error'));
     });
 });
