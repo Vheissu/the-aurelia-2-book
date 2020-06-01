@@ -1,0 +1,127 @@
+.product {
+    text-align: center;
+    padding: 0 0 72px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.image {
+    position: relative;
+    transition: all .3s ease 0s;
+}
+
+.social {
+    width: 150px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    transform: translateY(-50%) translateX(-50%);
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    z-index: 1;
+    transition: all .3s ease 0s;
+}
+
+.product:hover .social {
+    opacity: 1;
+    top: 50%;
+}
+
+.social li {
+    display: inline-block
+}
+
+.social li a {
+    color: #fff;
+    background-color: #333;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    margin: 0 2px;
+    display: block;
+    position: relative;
+    transition: all .3s ease-in-out
+}
+
+.social li a:hover {
+    color: #fff;
+    background-color: #ef5777
+}
+
+.social li a:after,
+.social li a:before {
+    content: attr(data-tip);
+    color: #fff;
+    background-color: #000;
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 20px;
+    padding: 1px 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-50%);
+    position: absolute;
+    left: 50%;
+    top: -30px
+}
+
+.social li a:after {
+    content: '';
+    height: 15px;
+    width: 15px;
+    border-radius: 0;
+    transform: translateX(-50%) rotate(45deg);
+    top: -20px;
+    z-index: -1
+}
+
+.social li a:hover:after,
+.social li a:hover:before {
+    opacity: 1
+}
+
+.content {
+    background-color: #fff;
+    text-align: center;
+    padding: 12px 0;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: .5px;
+    text-transform: capitalize;
+    margin: 0 0 10px;
+    transition: all .3s ease 0s
+}
+
+.title a {
+    color: #828282
+}
+
+.title a:hover,
+.product:hover .title a {
+    color: #ef5777
+}
+
+.price {
+    color: #333;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: .6px;
+    margin-bottom: 8px;
+    text-align: center;
+    transition: all .3s;
+}
+
+.add-to-cart {
+    color: #000;
+    font-size: 13px;
+    font-weight: 600;
+}

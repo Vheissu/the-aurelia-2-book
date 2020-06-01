@@ -1,0 +1,14 @@
+.card-padding {
+    padding: 3rem;
+}
+
+.preview img {
+    width: 100%;
+}
+
+.title {
+    font-weight: bold;
+    margin-bottom: 1.2rem;
+    margin-top: 0;
+    text-transform: uppercase;
+}
