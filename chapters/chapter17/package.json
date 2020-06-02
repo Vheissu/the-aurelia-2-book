@@ -10,7 +10,8 @@
   "dependencies": {
     "@aurelia/validation": "dev",
     "@aurelia/validation-html": "dev",
-    "aurelia": "dev"
+    "aurelia": "dev",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@aurelia/testing": "dev",

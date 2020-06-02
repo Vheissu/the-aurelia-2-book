@@ -10,6 +10,8 @@ import {
   LogLevel,
 } from '@aurelia/kernel';
 
+import 'whatwg-fetch';
+
 Reporter.level = LogLevel.error;
 
 function createBrowserTestContext(): HTMLTestContext {
