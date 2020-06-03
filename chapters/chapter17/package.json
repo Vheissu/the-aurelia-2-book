@@ -62,9 +62,7 @@
             "\\.(ts|html)$": [
                 "@aurelia/ts-jest",
                 {
-                    "defaultShadowOptions": {
-                        "mode": "open"
-                    }
+                    "useCSSModule": true
                 }
             ]
         },

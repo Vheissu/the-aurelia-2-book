@@ -6,11 +6,10 @@ import { ProductDetail } from './../src/components/product-detail/product-detail
 describe('Product Detail', () => {
   it('should render', async () => {
     const ctx = TestContext.createHTMLTestContext();
-    const { container } = ctx;
 
-    const host = ctx.createElement('my-app');
+    const host = ctx.createElement('div');
 
-    const viewModel = class MyApp {
+    const viewModel = class Host {
       product = {
         id: 1234,
         title: 'Test',
@@ -18,8 +17,8 @@ describe('Product Detail', () => {
       }
     }
 
-    const component = CustomElement.define({ name: 'host', template: `<product-detail product.bind="product"></product-detail>` }, viewModel);
-    const au = new Aurelia(container).register(TestConfiguration, ProductDetail).app({ host, component });
+    const component = CustomElement.define({ name: 'app', template: `<product-detail product.bind="product"></product-detail>` }, viewModel);
+    const au = new Aurelia(ctx.container).register(TestConfiguration, ProductDetail).app({ host, component });
 
     await au.start().wait();
 
