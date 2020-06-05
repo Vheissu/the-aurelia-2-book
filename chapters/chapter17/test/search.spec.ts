@@ -13,16 +13,36 @@ describe('Search', () => {
         const host = ctx.createElement('div');
 
         const viewModel = class Host {
+            showSearch = true;
         }
 
-        const component = CustomElement.define({ name: 'app', template: `<search></search>` }, viewModel);
+        const component = CustomElement.define({ name: 'app', template: `<search showing.bind="showSearch"></search>` }, viewModel);
         const au = new Aurelia(ctx.container).register(TestConfiguration, Search).app({ host, component });
 
         await au.start().wait();
 
-        const searchInput: HTMLInputElement = host.querySelector('input[type="search"]');
+        // Expect showing search class to be present
+        expect(host.querySelector('.show-search')).not.toBeNull();
 
-        expect(searchInput).not.toBeUndefined();
+        await au.stop().wait();
+    });
+
+    it('should hide search', async () => {
+        const ctx = TestContext.createHTMLTestContext();
+
+        const host = ctx.createElement('div');
+
+        const viewModel = class Host {
+            showSearch = false;
+        }
+
+        const component = CustomElement.define({ name: 'app', template: `<search showing.bind="showSearch"></search>` }, viewModel);
+        const au = new Aurelia(ctx.container).register(TestConfiguration, Search).app({ host, component });
+
+        await au.start().wait();
+
+        // Expect hidden search class to be present
+        expect(host.querySelector('.hidden-search')).not.toBeNull();
 
         await au.stop().wait();
     });
@@ -34,7 +54,6 @@ describe('Search', () => {
 
         const viewModel = class Host {
             showSearch = true;
-            searchValue = 'test value';
         }
 
         const component = CustomElement.define({ name: 'app', template: `<search showing.bind="showSearch"></search>` }, viewModel);
@@ -42,15 +61,58 @@ describe('Search', () => {
 
         await au.start().wait();
 
+        // Mock the search API response with two results
         fetchMock.mockResponseOnce(JSON.stringify([{ id: 1222, title: 'Some Product' }, { id: 392, title: 'Another Product' }]));
 
+        // Get the custom element and view-model
         const componentViewModel: Search = CustomElement.for(host.querySelector('search')).viewModel as any;
 
+        // Replicate populating search value
+        componentViewModel['searchValue'] = 'test value';
+
+        // Call the search function
         await componentViewModel.search();
 
-        console.log(componentViewModel);
+        // Search results are list items, we should have one per result
+        const results = host.querySelectorAll('li');
 
-        expect(componentViewModel['results']).toHaveLength(2);
+        // Expect two list items
+        expect(results).toHaveLength(2);
+
+        await au.stop().wait();
+    });
+
+    it('search does not return results', async () => {
+        const ctx = TestContext.createHTMLTestContext();
+
+        const host = ctx.createElement('div');
+
+        const viewModel = class Host {
+            showSearch = true;
+        }
+
+        const component = CustomElement.define({ name: 'app', template: `<search showing.bind="showSearch"></search>` }, viewModel);
+        const au = new Aurelia(ctx.container).register(TestConfiguration, Search).app({ host, component });
+
+        await au.start().wait();
+
+        // Mock the search API response with zero results
+        fetchMock.mockResponseOnce(JSON.stringify([]));
+
+        // Get the custom element and view-model
+        const componentViewModel: Search = CustomElement.for(host.querySelector('search')).viewModel as any;
+
+        // Replicate populating search value
+        componentViewModel['searchValue'] = 'test value';
+
+        // Call the search function
+        await componentViewModel.search();
+
+        // Search results are list items, we should have one per result
+        const results = host.querySelectorAll('li');
+
+        // Expect zero list items
+        expect(results).toHaveLength(0);
 
         await au.stop().wait();
     });
