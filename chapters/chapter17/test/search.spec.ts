@@ -35,17 +35,22 @@ describe('Search', () => {
         const viewModel = class Host {
             showSearch = true;
             searchValue = 'test value';
-            search;
         }
 
-        const component = CustomElement.define({ name: 'app', template: `<search showing.bind="showSearch" view-model.ref="search></search>` }, viewModel);
+        const component = CustomElement.define({ name: 'app', template: `<search showing.bind="showSearch"></search>` }, viewModel);
         const au = new Aurelia(ctx.container).register(TestConfiguration, Search).app({ host, component });
 
         await au.start().wait();
 
         fetchMock.mockResponseOnce(JSON.stringify([{ id: 1222, title: 'Some Product' }, { id: 392, title: 'Another Product' }]));
 
-        console.log(viewModel.search);
+        const componentViewModel: Search = CustomElement.for(host.querySelector('search')).viewModel as any;
+
+        await componentViewModel.search();
+
+        console.log(componentViewModel);
+
+        expect(componentViewModel['results']).toHaveLength(2);
 
         await au.stop().wait();
     });

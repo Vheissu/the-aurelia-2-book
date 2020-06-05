@@ -1,9 +1,8 @@
 import { ApiService } from '../../services/api-service';
-import { ICustomElementViewModel, BindingMode, containerless } from '@aurelia/runtime';
+import { ICustomElementViewModel, BindingMode } from '@aurelia/runtime';
 import { inject, EventAggregator, bindable } from 'aurelia';
 
 @inject(ApiService, EventAggregator, Element)
-@containerless()
 export class Search implements ICustomElementViewModel {
     private results = [];
     private searchValue = '';
