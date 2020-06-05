@@ -1,0 +1,78 @@
+{
+    "name": "catstore",
+    "description": "An Aurelia 2 client application.",
+    "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "???"
+    },
+    "license": "UNLICENSED",
+    "dependencies": {
+        "@aurelia/validation": "dev",
+        "@aurelia/validation-html": "dev",
+        "aurelia": "dev",
+        "whatwg-fetch": "^3.0.0"
+    },
+    "devDependencies": {
+        "@aurelia/testing": "dev",
+        "@aurelia/ts-jest": "dev",
+        "@aurelia/webpack-loader": "dev",
+        "@types/jest": "^25.0.0",
+        "@types/node": "^13.0.0",
+        "@typescript-eslint/eslint-plugin": "^2.0.0",
+        "@typescript-eslint/parser": "^2.0.0",
+        "autoprefixer": "^9.0.0",
+        "css-loader": "^3.0.0",
+        "cypress": "^4.0.0",
+        "cypress-shadow-dom": "^1.0.0",
+        "eslint": "^7.0.0",
+        "eslint-plugin-cypress": "^2.0.0",
+        "file-loader": "^6.0.0",
+        "html-webpack-plugin": "^4.0.0",
+        "htmlhint": "^0.11.0",
+        "jest": "^26.0.0",
+        "jest-fetch-mock": "^3.0.3",
+        "jest-transform-stub": "^2.0.0",
+        "postcss-loader": "^3.0.0",
+        "rimraf": "^3.0.0",
+        "style-loader": "^1.0.0",
+        "to-string-loader": "^1.0.0",
+        "ts-loader": "^7.0.0",
+        "typescript": "^3.0.0",
+        "url-loader": "^4.0.0",
+        "webpack": "^4.0.0",
+        "webpack-bundle-analyzer": "^3.0.0",
+        "webpack-cli": "^3.0.0",
+        "webpack-dev-server": "^3.0.0"
+    },
+    "scripts": {
+        "lint:js": "eslint src test cypress --ext .js,.ts",
+        "lint:html": "htmlhint -c .htmlhintrc src",
+        "lint": "npm run lint:js && npm run lint:html",
+        "pretest": "npm run lint",
+        "start": "webpack-dev-server",
+        "build": "rimraf dist && webpack --env production",
+        "analyze": "rimraf dist && webpack --env production --analyze",
+        "test": "jest",
+        "test:e2e": "cypress run"
+    },
+    "jest": {
+        "transform": {
+            "\\.(css|less|sass|scss|styl|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "jest-transform-stub",
+            "\\.(ts|html)$": [
+                "@aurelia/ts-jest",
+                {
+                    "useCSSModule": true
+                }
+            ]
+        },
+        "setupFiles": [
+            "<rootDir>/test/setup.ts"
+        ],
+        "collectCoverage": true,
+        "collectCoverageFrom": [
+            "src/**/*.ts",
+            "!src/**/*.d.ts"
+        ]
+    }
+}
