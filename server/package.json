@@ -12,13 +12,13 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.6",
-    "@types/node": "^14.0.1",
-    "typescript": "^3.9.2"
+    "@types/node": "^14.0.14",
+    "typescript": "^3.9.6"
   },
   "dependencies": {
     "@types/better-sqlite3": "^5.4.0",
     "@types/cors": "^2.8.6",
-    "better-sqlite3": "^7.0.1",
+    "better-sqlite3": "^7.1.0",
     "cors": "^2.8.5",
     "express": "^4.17.1"
   }
