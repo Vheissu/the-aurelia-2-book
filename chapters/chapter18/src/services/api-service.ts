@@ -47,6 +47,15 @@ export class ApiService {
         return response.json();
     }
 
+    // Update product
+    async updateProduct(product: any): Promise<any> {
+        const response = await this.http.put(`/product/${product.id}`, json({
+            ...product
+        }));
+
+        return response.json();
+    }
+
     // Get all orders for a user from the API
     async getOrders(userId: string | number): Promise<any[]> {
         const response = await this.http.post('/orders', json({ userId: userId }));
