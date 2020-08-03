@@ -34,7 +34,6 @@ app.get('/product/:id', (req, res) => {
 });
 
 app.put('/product/:id', (req, res) => {
-    console.log(req.body);
     db.prepare(`UPDATE products SET title='${req.body.title}', price=${req.body.price}, description='${req.body.description}' WHERE id = ?`).run(req.params.id);
 
     res.json({ success: true });
