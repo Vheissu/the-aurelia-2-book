@@ -15,7 +15,11 @@ export class Login implements IRouteableComponent {
             try {
                 await this.auth.login(this.username, this.password);
 
-                this.router.goto('/dashboard');
+                if (this.auth.isAdmin) {
+                    this.router.goto('admin');
+                } else {
+                    this.router.goto('dashboard');
+                }
             } catch (e) {
                 window.alert('There was an error.')
             }
