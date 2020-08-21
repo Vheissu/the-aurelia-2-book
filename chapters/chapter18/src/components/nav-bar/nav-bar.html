@@ -11,6 +11,9 @@
         <li class="nav-item" if.bind="auth.isLoggedIn">
             <a class="nav-link" goto="dashboard">Dashboard</a>
         </li>
+        <li class="nav-item" if.bind="auth.isAdmin">
+            <a class="nav-link" goto="admin">Admin</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" goto="cart">Cart (${cartTotal})</a>
         </li>

@@ -27,7 +27,7 @@ export class NavBar implements ICustomElementViewModel {
     }
 
     logout(): void {
-        this.auth.logout('/');
+        this.auth.logout('home');
     }
 
     showSearch(): void {

@@ -7,7 +7,7 @@ export class App implements IViewModel {
 
   private searchListener: IDisposable;
 
-  constructor(@IRouter private router: IRouter, private auth: AuthService, private ea: EventAggregator) {}
+  constructor(@IRouter private router: IRouter, private auth: AuthService, private ea: EventAggregator) { }
 
   beforeBind(): void {
     this.searchListener = this.ea.subscribe('search:open', () => this.showSearch = true);
@@ -19,14 +19,25 @@ export class App implements IViewModel {
 
   afterBind(): void {
     this.router.addHook(async (instructions: ViewportInstruction[]) => {
-        if (this.auth.isLoggedIn) {
-            return true;
-        }
+      if (this.auth.isLoggedIn) {
+        return true;
+      }
 
-        // User is not logged in, so redirect them back to login page
-        return [this.router.createViewportInstruction('login', instructions[0].viewport)];
+      // User is not logged in, so redirect them back to login page
+      return [this.router.createViewportInstruction('login', instructions[0].viewport)];
     }, {
       include: ['dashboard', 'orders', 'order'],
+    });
+
+    this.router.addHook(async (instructions: ViewportInstruction[]) => {
+      if (this.auth.isAdmin) {
+        return true;
+      }
+
+      // User is not logged in or permitted, so redirect them back to login page
+      return [this.router.createViewportInstruction('login', instructions[0].viewport)];
+    }, {
+      include: ['admin'],
     });
   }
 }
