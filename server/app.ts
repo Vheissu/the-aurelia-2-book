@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import sqlite from 'better-sqlite3';
+import { all, get, run } from './db';
 
 const app = express();
 const port = process.env.PORT || '3002';
@@ -11,7 +11,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
-const db = sqlite('catstore.db');
 
 app.get('/', (req, res) => {
     res.status(200).send('The server is working');
@@ -21,55 +20,56 @@ app.listen(port, () => {
     console.log(`Listening to requests on http://localhost:${port}`);
 });
 
-app.get('/products', (req, res) => {
-    const row = db.prepare('SELECT * from products').all();
+app.get('/products', async (req, res) => {
+    const rows = await all('SELECT * FROM products', []);
+
+    res.json(rows);
+});
+
+app.get('/product/:id', async (req, res) => {
+    const row = await get('SELECT * FROM products WHERE id = ?', [req.params.id]);
 
     res.json(row);
 });
 
-app.get('/product/:id', (req, res) => {
-    const row = db.prepare('SELECT * FROM products WHERE id = ?').get(req.params.id);
-
-    res.json(row);
-});
-
-app.put('/product/:id', (req, res) => {
-    db.prepare(`UPDATE products SET title='${req.body.title}', price=${req.body.price}, description='${req.body.description}' WHERE id = ?`).run(req.params.id);
+app.put('/product/:id', async (req, res) => {
+    await run(`UPDATE products SET title='${req.body.title}', price=${req.body.price}, description='${req.body.description}' WHERE id = ?`, [req.params.id]);
 
     res.json({ success: true });
 });
 
-app.post('/search', (req, res) => {
+app.post('/search', async (req, res) => {
     const query = req.body.query;
 
-    const rows = db.prepare(`SELECT * from products WHERE title LIKE ?`).all(`%${query}%`);
+    const rows = await all('SELECT * FROM products WHERE title LIKE ?', [`%${query}%`]);
 
     res.json(rows);
 })
 
-app.post('/orders', (req, res) => {
+app.post('/orders', async (req, res) => {
     const userId = req.body.userId;
-    const orders = db.prepare('SELECT * FROM orders WHERE userId = ?').all(userId) ?? [];
 
-    res.json(orders);
+    const rows = await all('SELECT * FROM orders WHERE userId=?', [userId]);
+
+    res.json(rows);
 });
 
-app.post('/order', (req, res) => {
-    const row = db.prepare('SELECT * FROM orders WHERE userId = ? AND id = ?').get(req.body.userId, req.body.orderId);
+app.post('/order', async (req, res) => {
+    const row = await get('SELECT * FROM orders WHERE userId=? AND id=?', [req.body.userId, req.body.orderId]) as any;
 
     row.quantity = parseInt(row.quantity);
 
     res.json(row);
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const userExists = db.prepare('SELECT username FROM users WHERE username = ?').get(username);
+    const userExists = await get('SELECT username FROM users WHERE username = ?', [username]);
 
     if (!userExists) {
-        const insert = db.prepare(`INSERT INTO users (username, password) VALUES('${username}', '${password}')`).run();
+        const insert = await run(`INSERT INTO users (username, password) VALUES('${username}', '${password}')`, []);
 
         if (insert) {
             res.json({ username, success: true });
@@ -79,7 +79,7 @@ app.post('/register', (req, res) => {
     }
 });
 
-app.post('/processOrder', (req, res) => {
+app.post('/processOrder', async (req, res) => {
     const userId = parseInt(req.body.userId);
     const fields: any = req.body.checkoutFields;
     const cart: any = req.body.cart;
@@ -93,18 +93,17 @@ app.post('/processOrder', (req, res) => {
         return runningTotal + total;
     }, 0).toFixed(2);
 
-    const insert = db.prepare(`INSERT INTO orders (cart, total, userId, firstName, lastName, email, address, address2, country, state, zip, paymentType, ccName, ccNumber, date) 
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
-    .run(`${JSON.stringify(cart)}`, `${total}`, `${userId}`, `${fields.firstName}`, `${fields.lastName}`, `${fields.email}`, `${fields.address}`, `${fields.address2}`, `${fields.country}`, `${fields.state}`, `${fields.zip}`, `${fields.paymentType}`, `${fields.ccName}`, `${fields.ccNumber}`, `${new Date()}`);
+    const insert = await run(`INSERT INTO orders (cart, total, userId, firstName, lastName, email, address, address2, country, state, zip, paymentType, ccName, ccNumber, date) 
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [`${JSON.stringify(cart)}`, `${total}`, `${userId}`, `${fields.firstName}`, `${fields.lastName}`, `${fields.email}`, `${fields.address}`, `${fields.address2}`, `${fields.country}`, `${fields.state}`, `${fields.zip}`, `${fields.paymentType}`, `${fields.ccName}`, `${fields.ccNumber}`, `${new Date()}`]);
 
-    res.json({ orderId: insert.lastInsertRowid, success: true });
+    res.json({ orderId: insert.lastID, success: true });
 });
 
-app.post('/user', (req, res) => {
+app.post('/user', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const user = db.prepare('SELECT id, username FROM users WHERE username = ? AND password = ?').get(username, password);
+    const user = await get('SELECT id, username FROM users WHERE username = ? AND password = ?', [username, password]);
 
     if (user) {
         res.status(200).json(user);

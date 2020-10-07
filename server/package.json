@@ -11,15 +11,15 @@
     "start": "node ."
   },
   "devDependencies": {
-    "@types/express": "^4.17.6",
-    "@types/node": "^14.0.14",
-    "typescript": "^3.9.6"
+    "@types/cors": "^2.8.7",
+    "@types/express": "^4.17.8",
+    "@types/node": "^14.11.5",
+    "@types/sqlite3": "^3.1.6",
+    "typescript": "^3.9.7"
   },
   "dependencies": {
-    "@types/better-sqlite3": "^5.4.0",
-    "@types/cors": "^2.8.6",
-    "better-sqlite3": "^7.1.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.0"
   }
 }
