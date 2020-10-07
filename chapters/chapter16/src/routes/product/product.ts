@@ -19,7 +19,7 @@ export class Product implements IRouteableComponent {
         this.image = response[0].url;
     }
 
-    public async enter(parameters: { id: string }): Promise<void> {
+    public async load(parameters: { id: string }): Promise<void> {
         this.product = await this.api.getProduct(parameters.id);
     }
 }

@@ -14,7 +14,7 @@ export class Product implements IRouteableComponent {
 
     }
 
-    public async enter(params: { id: string }): Promise<void> {
+    public async load(params: { id: string }): Promise<void> {
         const request = await this.http.fetch('https://api.thecatapi.com/v1/images/search?mime_types=jpg');
         const response = await request.json();
 

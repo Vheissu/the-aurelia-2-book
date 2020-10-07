@@ -24,7 +24,7 @@ export class AuthService {
         this._user = null;
 
 		if (redirect) {
-			this.router.goto(redirect);
+			this.router.load(redirect);
 		}
     }
 

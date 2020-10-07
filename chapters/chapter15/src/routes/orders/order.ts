@@ -12,7 +12,7 @@ export class Order implements IRouteableComponent {
 
     }
 
-    public async enter(parameters: {id: string}): Promise<void> {
+    public async load(parameters: {id: string}): Promise<void> {
         if (parameters.id) {
             this.order = await this.api.getOrder(this.auth.getCurrentUser().id, parameters.id);
 

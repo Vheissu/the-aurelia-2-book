@@ -16,7 +16,7 @@ export class Register implements IRouteableComponent {
             try {
                 await this.auth.register(this.username, this.password);
 
-                this.router.goto('/dashboard');
+                this.router.load('/dashboard');
             } catch (e) {
                 window.alert('There was an error registering.')
             }

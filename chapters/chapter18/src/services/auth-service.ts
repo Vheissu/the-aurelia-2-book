@@ -33,7 +33,7 @@ export class AuthService {
         sessionStorage.removeItem('catstore__auth');
 
 		if (redirect) {
-			this.router.goto(redirect);
+			this.router.load(redirect);
 		}
     }
 

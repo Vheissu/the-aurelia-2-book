@@ -88,7 +88,7 @@ export class Checkout implements IRouteableComponent {
             const order: { orderId: number; success: boolean } = await this.api.processOrder(1, this.details, this.cart);
     
             if (order.success) {
-                this.router.goto(`/order(${order.orderId})`);
+                this.router.load(`/order(${order.orderId})`);
             }
     
             this.processing = false;

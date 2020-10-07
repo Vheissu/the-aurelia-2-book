@@ -15,7 +15,7 @@ export class Login implements IRouteableComponent {
             try {
                 await this.auth.login(this.username, this.password);
 
-                this.router.goto('/dashboard');
+                this.router.load('/dashboard');
             } catch (e) {
                 window.alert('There was an error.')
             }
