@@ -8,13 +8,12 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "@aurelia/jit-html-browser": "^0.8.0-dev.202010031855",
-    "aurelia": "^0.8.0-dev.202010060234"
+    "aurelia": "^0.8.0-dev.202011161324"
   },
   "devDependencies": {
-    "@aurelia/testing": "^0.8.0-dev.202010060234",
-    "@aurelia/ts-jest": "^0.8.0-dev.202010060234",
-    "@aurelia/webpack-loader": "^0.8.0-dev.202010060234",
+    "@aurelia/testing": "^0.8.0-dev.202011161324",
+    "@aurelia/ts-jest": "^0.8.0-dev.202011161324",
+    "@aurelia/webpack-loader": "^0.8.0-dev.202011161324",
     "@types/jest": "^25.2.3",
     "@types/node": "^13.13.23",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
