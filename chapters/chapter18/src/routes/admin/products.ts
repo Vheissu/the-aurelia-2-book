@@ -8,7 +8,7 @@ export class Products implements IRouteableComponent {
         
     }
 
-    async beforeBind(): Promise<void> {
+    async binding(): Promise<void> {
         this.products = await this.api.getProducts();
     }
 }

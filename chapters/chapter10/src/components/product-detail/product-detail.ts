@@ -10,7 +10,7 @@ export class ProductDetail implements ICustomElementViewModel {
 
     }
 
-    public async beforeBind(): Promise<void> {
+    public async binding(): Promise<void> {
         const request = await this.http.fetch('https://api.thecatapi.com/v1/images/search?mime_types=jpg');
         const response = await request.json();
 

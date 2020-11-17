@@ -9,7 +9,7 @@ export class App implements IViewModel {
 
   constructor(@IRouter private router: IRouter, private auth: AuthService, private ea: EventAggregator) {}
 
-  beforeBind(): void {
+  binding(): void {
     this.searchListener = this.ea.subscribe('search:open', () => this.showSearch = true);
   }
 

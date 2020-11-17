@@ -7,7 +7,7 @@ export class Products implements IViewModel {
 
     }
 
-    async beforeBind(): Promise<any> {
+    async binding(): Promise<any> {
         this.products = await this.api.getProducts();
     }
 }

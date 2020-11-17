@@ -11,7 +11,7 @@ export class Orders implements IRouteableComponent {
 
     }
 
-    public async beforeBind(): Promise<void> {
+    public async binding(): Promise<void> {
         this.orders = await this.api.getOrders(this.auth.getCurrentUser().id);
     }
 }

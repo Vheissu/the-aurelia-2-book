@@ -10,7 +10,7 @@ export class Cart implements IViewModel {
 
     }
 
-    beforeBind(): void {
+    binding(): void {
         this.cart = this.api.getCart();
 
         this.calculateTotal();

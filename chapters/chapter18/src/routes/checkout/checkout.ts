@@ -70,7 +70,7 @@ export class Checkout implements IRouteableComponent {
                 .when((p => p.paymentType === 'credit'))
     }
 
-    public beforeBind(): void {
+    public binding(): void {
         this.cart = this.api.getCart();
         this.totalItems = this.api.getCartTotal();
 

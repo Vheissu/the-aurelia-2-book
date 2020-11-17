@@ -13,7 +13,7 @@ export class NavBar implements ICustomElementViewModel {
 
     }
 
-    beforeBind(): void {
+    binding(): void {
         this.cartTotal = this.api.getCartTotal();
 
         this.cartAddSubscription = this.ea.subscribe('cart:add', () => {
