@@ -1,6 +1,6 @@
 import { AuthService } from './../../services/auth-service';
 import { ApiService } from '../../services/api-service';
-import { ICustomElementViewModel } from '@aurelia/runtime';
+import { ICustomElementViewModel } from '@aurelia/runtime-html';
 import { inject, EventAggregator, IDisposable } from 'aurelia';
 
 @inject(ApiService, EventAggregator, AuthService)

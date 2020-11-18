@@ -1,4 +1,4 @@
-import { ICustomElementViewModel } from '@aurelia/runtime';
+import { ICustomElementViewModel } from '@aurelia/runtime-html';
 import { bindable, HttpClient } from 'aurelia';
 
 export class ProductDetail implements ICustomElementViewModel {
