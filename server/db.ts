@@ -5,7 +5,7 @@ const db = new sqlite3.Database('catstore.db');
 
 export const get = async (query, placeholders) => {
     return new Promise((resolve, reject) => {
-        db.get(query, query, (error, row) => {
+        db.get(query, placeholders, (error, row) => {
             if (error) {
                 return reject(error);
             }
