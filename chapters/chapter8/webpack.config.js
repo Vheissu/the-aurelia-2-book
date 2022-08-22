@@ -59,7 +59,7 @@ module.exports = function(env, { analyze }) {
       ]
     },
     plugins: [
-      new HtmlWebpackPlugin({ template: 'index.ejs' }),
+      new HtmlWebpackPlugin({ template: 'index.html' }),
       analyze && new BundleAnalyzerPlugin()
     ].filter(p => p)
   }
