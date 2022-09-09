@@ -7,7 +7,7 @@ import {
   IValidationResultPresenterService,
 } from "@aurelia/validation-html";
 import { IValidationRules } from "@aurelia/validation";
-import { IRouter } from "aurelia";
+import { IRouter } from "@aurelia/router";
 
 const sleep = (ms: number) => setTimeout(() => Promise.resolve(), ms);
 
@@ -37,9 +37,8 @@ export class StoreCheckout implements IRouteableComponent {
   constructor(
     @IApiService private api: IApiService,
     @IRouter private router: IRouter,
-    @newInstanceForScope(IValidationController)
-    private validationController: IValidationController,
-    @IValidationRules validationRules: IValidationRules,
+    @newInstanceForScope(IValidationController) @IValidationController private validationController: IValidationController,
+    @IValidationRules readonly validationRules: IValidationRules,
     @IValidationResultPresenterService private readonly presenter: IValidationResultPresenterService
   ) {
     this.validationController.addSubscriber(this.presenter);
@@ -87,12 +86,13 @@ export class StoreCheckout implements IRouteableComponent {
   public async submit(): Promise<void> {
     const result = await this.validationController.validate();
 
+    console.log(result);
+
     if (result.valid) {
       this.processing = true;
 
       await sleep(1500); // wait 1.5 seconds before going to the server
-      const order: { orderId: number; success: boolean } =
-        await this.api.processOrder(1, this.details, this.cart);
+      const order: { orderId: number; success: boolean } = await this.api.processOrder(1, this.details, this.cart);
 
       if (order.success) {
         this.router.load(`/order/${order.orderId}`);
