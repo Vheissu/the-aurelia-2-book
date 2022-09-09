@@ -1,6 +1,9 @@
 import { BrowserPlatform } from '@aurelia/platform-browser';
 import { createFixture, setPlatform } from '@aurelia/testing';
 
+import { enableFetchMocks } from 'jest-fetch-mock';
+enableFetchMocks();
+
 const platform = new BrowserPlatform(window);
 setPlatform(platform);
 BrowserPlatform.set(globalThis, platform);
@@ -8,8 +11,9 @@ BrowserPlatform.set(globalThis, platform);
 import { ProductDetail } from './../src/components/product-detail/product-detail';
 
 describe('Product Detail', () => {
+
   it('should render', async () => {
-      const { appHost, startPromise, tearDown } = createFixture('<product-detail product.bind="product"></product-detail>',
+      const { startPromise, appHost, tearDown } = createFixture('<product-detail product.bind="product"></product-detail>',
         class App {
             product = {
                 id: 1234,
