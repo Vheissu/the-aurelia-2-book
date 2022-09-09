@@ -1,7 +1,8 @@
-import Aurelia, { RouterConfiguration } from 'aurelia';
-import { App } from './app';
+import Aurelia from 'aurelia';
+import { RouterConfiguration } from '@aurelia/router';
+import { MyApp } from './my-app';
 
 Aurelia
   .register(RouterConfiguration.customize({ useUrlFragmentHash: false }))
-  .app(App)
+  .app(MyApp)
   .start();

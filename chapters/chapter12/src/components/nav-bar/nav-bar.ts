@@ -1,15 +1,14 @@
-import { ApiService } from '../../services/api-service';
+import { IApiService } from '../../services/api-service';
 import { ICustomElementViewModel } from '@aurelia/runtime-html';
-import { inject, EventAggregator, IDisposable } from 'aurelia';
+import { IEventAggregator, IDisposable } from 'aurelia';
 
-@inject(ApiService, EventAggregator)
 export class NavBar implements ICustomElementViewModel {
     private cartTotal = 0;
 
     private cartAddSubscription: IDisposable;
     private cartRemoveSubscription: IDisposable;
 
-    constructor(private api: ApiService, private ea: EventAggregator) {
+    constructor(@IApiService private api: IApiService, @IEventAggregator private ea: IEventAggregator) {
 
     }
 
