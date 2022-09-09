@@ -1,3 +1,4 @@
+import { DI } from 'aurelia';
 import { IHttpClient, json } from '@aurelia/fetch-client';
 
 export const IApiService = DI.createInterface<IApiService>("IApiService", x => x.singleton(ApiService));
