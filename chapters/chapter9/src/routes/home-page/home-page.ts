@@ -1,5 +1,5 @@
-import { IViewModel } from 'aurelia';
+import { ICustomElementViewModel } from 'aurelia';
 
-export class HomePage implements IViewModel {
+export class HomePage implements ICustomElementViewModel {
     
 }
