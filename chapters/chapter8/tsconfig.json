@@ -2,13 +2,14 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "module": "esnext",
     "moduleResolution": "node",
     "skipLibCheck": true,
-    "rootDir": "src",
-    "module": "esnext",
-    "target": "esnext",
+    "target": "ES2017",
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "sourceMap": true
   },
   "include": [
     "test",
