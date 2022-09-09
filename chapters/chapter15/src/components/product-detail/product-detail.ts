@@ -1,13 +1,13 @@
-import { ApiService } from '../../services/api-service';
-import { bindable, inject, HttpClient } from 'aurelia';
+import { IApiService } from './../../services/api-service';
+import { bindable } from 'aurelia';
+import { IHttpClient } from '@aurelia/fetch-client';
 
-@inject(ApiService, HttpClient)
 export class ProductDetail {
     @bindable private product;
 
     private image;
 
-    constructor(private api: ApiService, private http: HttpClient) {
+    constructor(@IHttpClient private http: IHttpClient, @IApiService private api: IApiService) {
 
     }
 

@@ -1,4 +1,8 @@
+import { AuthHook } from './auth-hook';
+
 export class MyApp {
+    static dependencies = [AuthHook];
+
     static routes = [
         {
             id: 'home',
@@ -34,6 +38,21 @@ export class MyApp {
             id: 'register',
             path: 'register',
             component: () => import('./routes/auth/store-register')
+        },
+        {
+            id: 'dashboard',
+            path: 'dashboard',
+            component: () => import('./routes/store-dashboard/store-dashboard'),
+        },
+        {
+            id: 'orders',
+            path: 'orders',
+            component: () => import('./routes/store-orders/store-orders'),
+        },
+        {
+            id: 'order',
+            path: 'order/:id',
+            component: () => import('./routes/store-orders/store-order'),
         },
     ];
   }

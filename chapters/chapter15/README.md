@@ -6,11 +6,22 @@ This project is bootstrapped by [aurelia/new](https://github.com/aurelia/new).
 
     npm start
 
-## Build the app
-
-Build files to dist folder.
+## Build the app in production mode
 
     npm run build
+
+It builds all files to dist folder. To deploy to production server, copy all the `dist/*` files to production root folder.
+
+For example
+```
+dist/index.html
+dist/foo.12345.js
+```
+Copy to production root folder
+```
+root_folder/index.html
+root_folder/foo.12345.js
+```
 
 ## Unit Tests
 
@@ -25,24 +36,18 @@ Run unit tests in watch mode.
 
     npm run analyze
 
+## Playwright e2e test
 
-## Cypress e2e test
+You may need to install playwright test browsers if have not.
 
-All e2e tests are in `cypress/integration/`.
-Note the source code of the app and unit tests is in TypeScript, but e2e tests are in plain ESNext JavaScript. You can however [write e2e tests in TypeScript too for Cypress](https://docs.cypress.io/guides/tooling/typescript-support.html#Transpiling-TypeScript-test-files).
+   npx playwright install --with-deps
 
-First, run the app in dev mode
+All e2e tests are in `e2e/`.
 
-    npm start
-
-Then run e2e tests in another terminal window with
+Run e2e tests with:
 
     npm run test:e2e
 
-Note if your dev app is not running on port 9000, you need to modify `cypress.json` to update dev app port.
+Note the playwright config automatically runs "npm start" before playwright.
 
-To run Cypress interactively, do
-
-    npx cypress open
-
-For more information, visit https://www.cypress.io
+For more information, visit https://playwright.dev/docs/test-cli
