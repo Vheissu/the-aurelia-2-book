@@ -1,12 +1,12 @@
-import { ICustomElementViewModel } from '@aurelia/runtime-html';
-import { bindable, HttpClient } from 'aurelia';
+import { bindable } from 'aurelia';
+import { IHttpClient } from '@aurelia/fetch-client';
 
-export class ProductDetail implements ICustomElementViewModel {
+export class ProductDetail {
     @bindable private product;
 
     private image;
 
-    constructor(private http: HttpClient) {
+    constructor(@IHttpClient private http: IHttpClient) {
 
     }
 
