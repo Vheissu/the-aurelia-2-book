@@ -1,12 +1,17 @@
-import { IRouter } from 'aurelia';
+import { DI } from 'aurelia';
+import { IRouter } from '@aurelia/router';
 
-import { ApiService } from './api-service';
+import { IApiService } from './api-service';
+
+export const IAuthService = DI.createInterface<IAuthService>("IAuthService", x => x.singleton(AuthService));
+
+export interface IAuthService extends AuthService { }
 
 export class AuthService {
     public isLoggedIn = false;
     private _user = null;
 
-	constructor(private api: ApiService, @IRouter private router: IRouter) {
+	constructor(@IApiService private api: IApiService, @IRouter private router: IRouter) {
 
 	}
 
