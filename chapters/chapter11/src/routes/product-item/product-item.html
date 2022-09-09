@@ -3,7 +3,7 @@
         <div class="wrapper row">
             <div class="preview col-md-6">
                 <div class="tab-content preview">
-                    <img src.bind="image" class="d-block">
+                    <img src="http://placekitten.com/400/250" class="d-block">
                 </div>
             </div>
             <div class="details col-md-6">
@@ -11,7 +11,7 @@
                 <p class="description" textcontent.bind="product.description"></p>
                 <h4 class="price">$${product.price}</h4>
                 <div class="buttons">
-                    <button class="add-to-cart btn btn-primary" type="button" click.trigger="api.addToCart(product)">Add to cart</button>
+                    <button class="add-to-cart btn btn-primary" type="button" click.trigger="api.addToCart()">Add to cart</button>
                 </div>
             </div>
         </div>
