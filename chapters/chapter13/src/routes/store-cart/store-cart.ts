@@ -1,12 +1,11 @@
-import { ApiService } from './../../services/api-service';
-import { IViewModel, inject } from 'aurelia';
+import { IApiService } from './../../services/api-service';
+import { ICustomElementViewModel } from 'aurelia';
 
-@inject(ApiService)
-export class Cart implements IViewModel {
+export class StoreCart implements ICustomElementViewModel {
     private cart = [];
     private total = 0.00;
 
-    constructor(private api: ApiService) {
+    constructor(@IApiService private api: IApiService) {
 
     }
 
