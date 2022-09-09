@@ -1,35 +1,34 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <a class="navbar-brand" href="/">Catstore</a>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Catstore</a>
 
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-            <a class="nav-link" load="products">Products</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" load="checkout">Checkout</a>
-        </li>
-        <li class="nav-item" if.bind="auth.isLoggedIn">
-            <a class="nav-link" load="dashboard">Dashboard</a>
-        </li>
-        <li class="nav-item" if.bind="auth.isAdmin">
-            <a class="nav-link" load="admin">Admin</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" load="cart">Cart (${cartTotal})</a>
-        </li>
-    </ul>
-    <ul class="navbar-nav">
-        <li class="nav-item" if.bind="!auth.isLoggedIn">
-            <a class="nav-link" load="login">Login</a>
-        </li>
-        <li class="nav-item" if.bind="!auth.isLoggedIn">
-            <a class="nav-link" load="register">Register</a>
-        </li>
-        <li class="nav-item" if.bind="auth.isLoggedIn">
-            <a href="javascript:void(0);" class="nav-link" click.trigger="logout()" external>Logout</a>
-        </li>
-        <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link" click.trigger="showSearch()" external><b class="fa fa-search"></b></a>
-        </li>
-    </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" load="products">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" load="checkout">Checkout</a>
+            </li>
+            <li class="nav-item" if.bind="auth.isLoggedIn">
+                <a class="nav-link" load="dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" load="cart">Cart (${cartTotal})</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item" if.bind="!auth.isLoggedIn">
+                <a class="nav-link" load="login">Login</a>
+            </li>
+            <li class="nav-item" if.bind="!auth.isLoggedIn">
+                <a class="nav-link" load="register">Register</a>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:void(0);" class="nav-link" click.trigger="showSearch()" external><b class="fa fa-search"></b></a>
+            </li>
+            <li class="nav-item" if.bind="auth.isLoggedIn">
+                <a class="nav-link" click.trigger="logout()">Logout</a>
+            </li>
+        </ul>
+    </div>
 </nav>

@@ -1,0 +1,11 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Manage Products</h1>
+
+            <ul>
+                <li repeat.for="product of products"><a load="product(${product.id})">${product.title}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

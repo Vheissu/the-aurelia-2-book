@@ -1,18 +1,18 @@
-import { IRouter } from 'aurelia';
+import { DI } from 'aurelia';
+import { IRouter } from '@aurelia/router';
 
-import { ApiService } from './api-service';
+import { IApiService } from './api-service';
+
+export const IAuthService = DI.createInterface<IAuthService>("IAuthService", x => x.singleton(AuthService));
+
+export interface IAuthService extends AuthService { }
 
 export class AuthService {
     public isLoggedIn = false;
     private _user = null;
 
-	constructor(private api: ApiService, @IRouter private router: IRouter) {
-        const userLocal = sessionStorage.getItem('catstore__auth');
+	constructor(@IApiService private api: IApiService, @IRouter private router: IRouter) {
 
-        if (userLocal) {
-            this.isLoggedIn = true;
-            this._user = JSON.parse(userLocal);
-        }
 	}
 
 	public async login(username: string, password: string) {
@@ -21,16 +21,12 @@ export class AuthService {
         if (user) {
             this.isLoggedIn = true;
             this._user = user;
-
-            sessionStorage.setItem('catstore__auth', JSON.stringify(user));
         }
 	}
 
 	public logout(redirect = null) {
         this.isLoggedIn = false;
         this._user = null;
-
-        sessionStorage.removeItem('catstore__auth');
 
 		if (redirect) {
 			this.router.load(redirect);
@@ -46,13 +42,7 @@ export class AuthService {
             this._user = {
                 username
             };
-
-            sessionStorage.setItem('catstore__auth', JSON.stringify(this._user));
         }
-    }
-
-    public get isAdmin() {
-        return this.isLoggedIn && this._user.username === 'admin';
     }
     
     public getCurrentUser() {

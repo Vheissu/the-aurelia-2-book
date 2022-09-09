@@ -1,16 +1,15 @@
-import { AuthService } from './../../services/auth-service';
-import { ApiService } from '../../services/api-service';
 import { ICustomElementViewModel } from '@aurelia/runtime-html';
-import { inject, EventAggregator, IDisposable } from 'aurelia';
+import { IEventAggregator, IDisposable } from 'aurelia';
+import { IApiService } from '../../services/api-service';
+import { IAuthService } from '../../services/auth-service';
 
-@inject(ApiService, EventAggregator, AuthService)
 export class NavBar implements ICustomElementViewModel {
     private cartTotal = 0;
 
     private cartAddSubscription: IDisposable;
     private cartRemoveSubscription: IDisposable;
 
-    constructor(private api: ApiService, private ea: EventAggregator, private auth: AuthService) {
+    constructor(@IApiService private api: IApiService, @IEventAggregator private ea: IEventAggregator, @IAuthService private auth: IAuthService) {
 
     }
 
@@ -27,7 +26,7 @@ export class NavBar implements ICustomElementViewModel {
     }
 
     logout(): void {
-        this.auth.logout('home');
+        this.auth.logout('/');
     }
 
     showSearch(): void {
