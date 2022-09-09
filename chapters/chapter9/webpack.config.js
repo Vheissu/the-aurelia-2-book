@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+const Dotenv = require('dotenv-webpack');
 
 const cssLoader = {
   loader: 'css-loader',
@@ -11,45 +13,72 @@ const cssLoader = {
   }
 };
 
+
 const postcssLoader = {
   loader: 'postcss-loader',
   options: {
-    plugins: () => [
-      require('autoprefixer')()
-    ]
+    postcssOptions: {
+      plugins: ['autoprefixer']
+    }
   }
 };
 
 module.exports = function(env, { analyze }) {
-  const production = env === 'production' || process.env.NODE_ENV === 'production';
+  const production = env.production || process.env.NODE_ENV === 'production';
   return {
+    target: 'web',
     mode: production ? 'production' : 'development',
-    devtool: production ? 'source-maps' : 'inline-source-map',
-    entry: './src/main.ts',
+    devtool: production ? undefined : 'eval-cheap-source-map',
+    entry: {
+      entry: './src/main.ts'
+    },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'entry-bundle.js'
+      filename: production ? '[name].[contenthash].bundle.js' : '[name].bundle.js'
     },
     resolve: {
       extensions: ['.ts', '.js'],
-      modules: [path.resolve(__dirname, 'src'), 'node_modules']
+      modules: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'dev-app'), 'node_modules'],
+      alias: production ? {
+        // add your production aliasing here
+      } : {
+        ...[
+          'fetch-client',
+          'kernel',
+          'metadata',
+          'platform',
+          'platform-browser',
+          'plugin-conventions',
+          'route-recognizer',
+          'router',
+          'router-lite',
+          'runtime',
+          'runtime-html',
+          'testing',
+          'webpack-loader',
+        ].reduce((map, pkg) => {
+          const name = `@aurelia/${pkg}`;
+          map[name] = path.resolve(__dirname, 'node_modules', name, 'dist/esm/index.dev.mjs');
+          return map;
+        }, {
+          'aurelia': path.resolve(__dirname, 'node_modules/aurelia/dist/esm/index.dev.mjs'),
+          // add your development aliasing here
+        })
+      }
     },
     devServer: {
       historyApiFallback: true,
       open: !process.env.CI,
-      port: 9000,
-      lazy: false
+      port: 9000
     },
     module: {
       rules: [
-        { test: /\.(png|gif|jpg|cur)$/i, loader: 'url-loader', options: { limit: 8192 } },
-        { test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'url-loader', options: { limit: 10000, mimetype: 'application/font-woff2' } },
-        { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'url-loader', options: { limit: 10000, mimetype: 'application/font-woff' } },
-        { test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'file-loader' },
+        { test: /\.(png|svg|jpg|jpeg|gif)$/i, type: 'asset' },
+        { test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,  type: 'asset' },
         { test: /\.css$/i, use: [ 'style-loader', cssLoader, postcssLoader ] },
         { test: /\.ts$/i, use: ['ts-loader', '@aurelia/webpack-loader'], exclude: /node_modules/ },
         {
-          test: /\.html$/i,
+          test: /[/\\]src[/\\].+\.html$/i,
           use: {
             loader: '@aurelia/webpack-loader',
             options: { useCSSModule: true }
@@ -59,7 +88,10 @@ module.exports = function(env, { analyze }) {
       ]
     },
     plugins: [
-      new HtmlWebpackPlugin({ template: 'index.ejs' }),
+      new HtmlWebpackPlugin({ template: 'index.html', favicon: 'favicon.ico' }),
+      new Dotenv({
+        path: `./.env${production ? '' :  '.' + (process.env.NODE_ENV || 'development')}`,
+      }),
       analyze && new BundleAnalyzerPlugin()
     ].filter(p => p)
   }
