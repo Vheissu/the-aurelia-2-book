@@ -8,7 +8,7 @@ export class ProductsList implements ICustomElementViewModel {
 
     }
 
-    async binding(): Promise<any> {
+    async binding(): Promise<void> {
         this.products = await this.api.getProducts();
     }
 }

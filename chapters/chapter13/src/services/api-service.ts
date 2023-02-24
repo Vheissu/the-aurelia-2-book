@@ -3,7 +3,7 @@ import { IHttpClient, json } from '@aurelia/fetch-client';
 
 export const IApiService = DI.createInterface<IApiService>("IApiService", x => x.singleton(ApiService));
 
-export interface IApiService extends ApiService {  }
+export type IApiService = ApiService;
 
 export class ApiService {
     constructor(@IHttpClient private http: IHttpClient, @IEventAggregator private ea: IEventAggregator) {

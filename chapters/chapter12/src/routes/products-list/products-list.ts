@@ -8,6 +8,7 @@ export class ProductsList implements ICustomElementViewModel {
 
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async binding(): Promise<any> {
         this.products = await this.api.getProducts();
     }

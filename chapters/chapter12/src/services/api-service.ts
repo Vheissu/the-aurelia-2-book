@@ -3,7 +3,7 @@ import { IHttpClient, json } from '@aurelia/fetch-client';
 
 export const IApiService = DI.createInterface<IApiService>("IApiService", x => x.singleton(ApiService));
 
-export interface IApiService extends ApiService {  }
+export type IApiService = ApiService;
 
 export class ApiService {
     constructor(@IHttpClient private http: IHttpClient, @IEventAggregator private ea: IEventAggregator) {
@@ -18,6 +18,7 @@ export class ApiService {
     }
 
     // Gets all projects from the API
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async getProducts(): Promise<any[]> {
         const response = await this.http.get('/products');
         
@@ -32,6 +33,7 @@ export class ApiService {
     }
 
     // Get all orders for a user from the API
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async getOrders(userId: string | number): Promise<any[]> {
         const response = await this.http.post('/orders', json({ userId: userId }));
 
@@ -39,18 +41,21 @@ export class ApiService {
     }
 
     // A login method to verify a users login credentials
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async login(username: string, password: string): Promise<any> {
         const response = await this.http.post('/user', json({username, password}));
 
         return response.json();
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async register(username: string, password: string): Promise<any> {
         const response = await this.http.post('/register', json({ username, password}));
 
         return response.json();
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public addToCart(product: any): any[] {
         const existingCart = this.getCart();
     
@@ -74,6 +79,7 @@ export class ApiService {
         return existingCart;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public getCart(): any[] {
         return JSON.parse(localStorage.getItem('cart')) ?? [];
     }
@@ -86,6 +92,7 @@ export class ApiService {
         }, 0);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public removeFromCart(productId: number): any[] {
         let existingCart = this.getCart();
     

@@ -3,9 +3,9 @@ import { IRouter } from '@aurelia/router';
 
 import { IApiService } from './api-service';
 
-export const IAuthService = DI.createInterface<IAuthService>("IAuthService", x => x.singleton(AuthService));
+export const IAuthService = DI.createInterface<IAuthService>('IAuthService', x => x.singleton(AuthService));
 
-export interface IAuthService extends AuthService { }
+export type IAuthService = AuthService;
 
 export class AuthService {
     public isLoggedIn = false;
