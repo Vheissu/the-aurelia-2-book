@@ -1,10 +1,14 @@
-import { ICustomElementViewModel, IEventAggregator, IDisposable } from 'aurelia';
+import { ICustomElementViewModel, IEventAggregator, IDisposable, resolve } from 'aurelia';
 import { IRouter } from '@aurelia/router';
 
 import { IAuthService } from './services/auth-service';
 import { AuthHook } from './auth-hook';
 
 export class MyApp {
+    private router: IRouter = resolve(IRouter);
+    private auth: IAuthService = resolve(IAuthService);
+    private ea: IEventAggregator = resolve(IEventAggregator);
+
     static dependencies = [AuthHook];
 
     private showSearch = false;
@@ -64,7 +68,7 @@ export class MyApp {
         },
     ];
 
-    constructor(@IRouter private router: IRouter, @IAuthService private auth: IAuthService, @IEventAggregator private ea: IEventAggregator) {}
+    
 
     binding(): void {
         this.searchListener = this.ea.subscribe('search:open', () => this.showSearch = true);

@@ -1,4 +1,4 @@
-import { DI, IEventAggregator } from 'aurelia';
+import { DI, IEventAggregator, resolve } from 'aurelia';
 import { IHttpClient, json } from '@aurelia/fetch-client';
 
 export const IApiService = DI.createInterface<IApiService>('IApiService', x => x.singleton(ApiService));
@@ -6,9 +6,14 @@ export const IApiService = DI.createInterface<IApiService>('IApiService', x => x
 export interface IApiService extends ApiService {  }
 
 export class ApiService {
-    constructor(@IHttpClient private http: IHttpClient, @IEventAggregator private ea: IEventAggregator) {
+    private http: IHttpClient;
+    private ea: IEventAggregator;
+
+    constructor(http?: IHttpClient, ea?: IEventAggregator) {
+        this.http = http ?? resolve(IHttpClient);
+        this.ea = ea ?? resolve(IEventAggregator);
         // Call the configure method to get the configuration object
-        http.configure((config) => {
+        this.http.configure((config) => {
             // Prefix all API requests with this URL, it saves us having to repeat it
             config.withBaseUrl('http://localhost:3002')
 

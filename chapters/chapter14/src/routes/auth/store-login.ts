@@ -1,13 +1,15 @@
+import { resolve } from 'aurelia';
 import { IAuthService } from './../../services/auth-service';
 import { IRouteableComponent, IRouter } from '@aurelia/router';
 
 export class StoreLogin implements IRouteableComponent {
+    private router: IRouter = resolve(IRouter);
+    private auth: IAuthService = resolve(IAuthService);
+
     private username;
     private password;
 
-    constructor(@IRouter private router: IRouter, @IAuthService private auth: IAuthService) {
-
-    }
+    
 
     async submit(): Promise<void> {
         if (this.username && this.password) {

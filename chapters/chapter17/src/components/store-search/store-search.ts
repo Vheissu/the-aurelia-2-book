@@ -1,9 +1,11 @@
 import { IApiService } from '../../services/api-service';
 import { BindingMode } from '@aurelia/runtime';
 import { ICustomElementViewModel } from '@aurelia/runtime-html';
-import { bindable } from 'aurelia';
+import { BindingMode, bindable, resolve } from 'aurelia';
 
 export class StoreSearch implements ICustomElementViewModel {
+    private api: IApiService = resolve(IApiService);
+
     private results = [];
     private searchValue = '';
 
@@ -11,9 +13,7 @@ export class StoreSearch implements ICustomElementViewModel {
     @bindable({ mode: BindingMode.twoWay }) private showing = false;
 
     // Inject the api
-    constructor(@IApiService private api: IApiService) {
-
-    }
+    
 
     // Called on the container and used to close the search dialog if escape is pressed
     keypress(event: KeyboardEvent) {

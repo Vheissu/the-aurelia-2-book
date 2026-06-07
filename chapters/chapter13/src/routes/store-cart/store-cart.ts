@@ -1,13 +1,13 @@
 import { IApiService } from './../../services/api-service';
-import { ICustomElementViewModel } from 'aurelia';
+import { ICustomElementViewModel, resolve } from 'aurelia';
 
 export class StoreCart implements ICustomElementViewModel {
+    private api: IApiService = resolve(IApiService);
+
     private cart = [];
     private total = 0.00;
 
-    constructor(@IApiService private api: IApiService) {
-
-    }
+    
 
     binding(): void {
         this.cart = this.api.getCart();

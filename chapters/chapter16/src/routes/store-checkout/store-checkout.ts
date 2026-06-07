@@ -1,4 +1,5 @@
-import { IAuthService } from './../../../../chapter14/src/services/auth-service';
+import { resolve } from 'aurelia';
+import { IAuthService } from '../../services/auth-service';
 import { IApiService } from "../../services/api-service";
 import { IRouteableComponent } from "@aurelia/router";
 
@@ -13,6 +14,13 @@ import { IRouter } from "@aurelia/router";
 const sleep = (ms: number) => setTimeout(() => Promise.resolve(), ms);
 
 export class StoreCheckout implements IRouteableComponent {
+    private api: IApiService = resolve(IApiService);
+    private auth: IAuthService = resolve(IAuthService);
+    private router: IRouter = resolve(IRouter);
+    private validationController: IValidationController = resolve(newInstanceForScope(IValidationController));
+    private readonly validationRules: IValidationRules = resolve(IValidationRules);
+    private readonly presenter: IValidationResultPresenterService = resolve(IValidationResultPresenterService);
+
   private details = {
     firstName: "",
     lastName: "",
@@ -35,17 +43,10 @@ export class StoreCheckout implements IRouteableComponent {
   private total;
   private totalItems = 0;
 
-  constructor(
-    @IApiService private api: IApiService,
-    @IAuthService private auth: IAuthService,
-    @IRouter private router: IRouter,
-    @newInstanceForScope(IValidationController) @IValidationController private validationController: IValidationController,
-    @IValidationRules readonly validationRules: IValidationRules,
-    @IValidationResultPresenterService private readonly presenter: IValidationResultPresenterService
-  ) {
+  constructor() {
     this.validationController.addSubscriber(this.presenter);
 
-    validationRules
+    this.validationRules
       .on(this.details)
       .ensure("firstName")
       .required()

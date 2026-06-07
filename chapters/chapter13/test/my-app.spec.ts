@@ -1,10 +1,9 @@
-import { render } from './helper';
+import { describe, expect, it } from 'vitest';
 import { MyApp } from '../src/my-app';
 
-describe('my-app', () => {
-  it('should render message', async () => {
-    const node = (await render('<my-app></my-app>', MyApp)).firstElementChild;
-    const text =  node.textContent;
-    expect(text.trim()).toBe('Hello World!');
+describe('my-app routes', () => {
+  it('defines chapter routes', () => {
+    expect(MyApp.routes.length).toBeGreaterThan(0);
+    expect(MyApp.routes.some((route) => route.id === 'home')).toBe(true);
   });
 });

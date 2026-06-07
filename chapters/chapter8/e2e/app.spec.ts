@@ -1,11 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
-  await page.goto('http://localhost:9000');
-});
+test('loads the chapter app', async ({ page }) => {
+  await page.goto('/');
 
-test.describe('MyApp', () => {
-  test('shows message', async ({ page }) => {
-    await expect(page.locator('my-app div')).toHaveText('Hello World!');
-  });
+  await expect(page.locator('my-app')).toContainText('Hello World!');
 });

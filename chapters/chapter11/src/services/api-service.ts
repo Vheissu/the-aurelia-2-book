@@ -1,4 +1,4 @@
-import { DI } from 'aurelia';
+import { DI, resolve } from 'aurelia';
 import { IHttpClient, json } from '@aurelia/fetch-client';
 
 export const IApiService = DI.createInterface<IApiService>("IApiService", x => x.singleton(ApiService));
@@ -6,9 +6,12 @@ export const IApiService = DI.createInterface<IApiService>("IApiService", x => x
 export interface IApiService extends ApiService {  }
 
 export class ApiService {
-    constructor(@IHttpClient private http: IHttpClient) {
+    private http: IHttpClient;
+
+    constructor(http?: IHttpClient) {
+        this.http = http ?? resolve(IHttpClient);
         // Call the configure method to get the configuration object
-        http.configure((config) => {
+        this.http.configure((config) => {
             // Prefix all API requests with this URL, it saves us having to repeat it
             config.withBaseUrl('http://localhost:3002')
 

@@ -1,4 +1,4 @@
-import { DI } from 'aurelia';
+import { DI, resolve } from 'aurelia';
 import { IRouter } from '@aurelia/router';
 
 import { IApiService } from './api-service';
@@ -8,12 +8,13 @@ export const IAuthService = DI.createInterface<IAuthService>("IAuthService", x =
 export interface IAuthService extends AuthService { }
 
 export class AuthService {
+    private api: IApiService = resolve(IApiService);
+    private router: IRouter = resolve(IRouter);
+
     public isLoggedIn = false;
     private _user = null;
 
-	constructor(@IApiService private api: IApiService, @IRouter private router: IRouter) {
-
-	}
+	
 
 	public async login(username: string, password: string) {
         const user = await this.api.login(username, password);

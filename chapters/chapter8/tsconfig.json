@@ -1,19 +1,30 @@
 {
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2022"
+    ],
     "skipLibCheck": true,
-    "target": "ES2017",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "importHelpers": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "types": [
+      "vitest/globals",
+      "node"
+    ],
+    "useDefineForClassFields": true
   },
   "include": [
+    "src",
     "test",
-    "src"
+    "e2e",
+    "vite.config.ts"
   ],
   "files": [
     "src/resource.d.ts"

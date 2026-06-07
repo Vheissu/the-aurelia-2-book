@@ -1,14 +1,14 @@
-import { bindable } from 'aurelia';
+import { bindable, resolve } from 'aurelia';
 import { IHttpClient } from '@aurelia/fetch-client';
 
 export class ProductDetail {
+    private http: IHttpClient = resolve(IHttpClient);
+
     @bindable private product;
 
     private image;
 
-    constructor(@IHttpClient private http: IHttpClient) {
-
-    }
+    
 
     public async binding(): Promise<void> {
         const request = await this.http.fetch('https://api.thecatapi.com/v1/images/search?mime_types=jpg');
