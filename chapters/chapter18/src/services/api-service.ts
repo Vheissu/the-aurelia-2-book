@@ -114,6 +114,15 @@ export class ApiService {
         return response.json();
     }
 
+    // Update product
+    async updateProduct(product: any): Promise<any> {
+        const response = await this.http.put(`/product/${product.id}`, json({
+            ...product
+        }));
+
+        return response.json();
+    }
+
     public removeFromCart(productId: number): any[] {
         let existingCart = this.getCart();
     

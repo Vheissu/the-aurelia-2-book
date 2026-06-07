@@ -14,7 +14,14 @@ export class AuthService {
     public isLoggedIn = false;
     private _user = null;
 
-	
+	constructor() {
+        const userLocal = sessionStorage.getItem('catstore__auth');
+
+        if (userLocal) {
+            this.isLoggedIn = true;
+            this._user = JSON.parse(userLocal);
+        }
+	}
 
 	public async login(username: string, password: string) {
         const user = await this.api.login(username, password);
@@ -22,12 +29,16 @@ export class AuthService {
         if (user) {
             this.isLoggedIn = true;
             this._user = user;
+
+            sessionStorage.setItem('catstore__auth', JSON.stringify(user));
         }
 	}
 
 	public logout(redirect = null) {
         this.isLoggedIn = false;
         this._user = null;
+
+        sessionStorage.removeItem('catstore__auth');
 
 		if (redirect) {
 			this.router.load(redirect);
@@ -43,10 +54,16 @@ export class AuthService {
             this._user = {
                 username
             };
+
+            sessionStorage.setItem('catstore__auth', JSON.stringify(this._user));
         }
     }
     
     public getCurrentUser() {
         return this._user;
+    }
+
+    public get isAdmin() {
+        return this.isLoggedIn && this._user.username === 'admin';
     }
 }

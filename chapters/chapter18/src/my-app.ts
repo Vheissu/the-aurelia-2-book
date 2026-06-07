@@ -66,6 +66,37 @@ export class MyApp {
             path: 'order/:id',
             component: () => import('./routes/store-orders/store-order'),
         },
+        {
+            id: 'admin',
+            path: 'admin',
+            component: () => import('./routes/store-admin/store-admin'),
+            data: {
+                auth: true,
+                admin: true,
+            },
+            routes: [
+                {
+                    id: 'admin-products',
+                    path: ['', 'products'],
+                    component: () => import('./routes/store-admin/admin-products'),
+                    viewport: 'admin',
+                    data: {
+                        auth: true,
+                        admin: true,
+                    },
+                },
+                {
+                    id: 'admin-product',
+                    path: 'product/:id',
+                    component: () => import('./routes/store-admin/admin-product'),
+                    viewport: 'admin',
+                    data: {
+                        auth: true,
+                        admin: true,
+                    },
+                },
+            ],
+        },
     ];
 
     

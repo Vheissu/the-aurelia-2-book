@@ -1,7 +1,5 @@
 import { IApiService } from '../../services/api-service';
-import { BindingMode } from '@aurelia/runtime';
-import { ICustomElementViewModel } from '@aurelia/runtime-html';
-import { BindingMode, bindable, resolve } from 'aurelia';
+import { BindingMode, bindable, ICustomElementViewModel, resolve } from 'aurelia';
 
 export class StoreSearch implements ICustomElementViewModel {
     private api: IApiService = resolve(IApiService);
@@ -11,9 +9,6 @@ export class StoreSearch implements ICustomElementViewModel {
 
     // Create a bindable property and make it two way, so when we set it to false from this view-model the value goes back out of the component
     @bindable({ mode: BindingMode.twoWay }) private showing = false;
-
-    // Inject the api
-    
 
     // Called on the container and used to close the search dialog if escape is pressed
     keypress(event: KeyboardEvent) {

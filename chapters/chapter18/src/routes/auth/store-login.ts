@@ -16,7 +16,11 @@ export class StoreLogin implements IRouteableComponent {
             try {
                 await this.auth.login(this.username, this.password);
 
-                this.router.load('/dashboard');
+                if (this.auth.isAdmin) {
+                    this.router.load('/admin');
+                } else {
+                    this.router.load('/dashboard');
+                }
             } catch (e) {
                 window.alert('There was an error.')
             }

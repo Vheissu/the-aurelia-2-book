@@ -1,0 +1,27 @@
+<div class="product row">
+    <div class="col-3 image">
+        <img src.bind="image" class="img-fluid">
+    </div>
+
+    <div class="content col-9">
+        <div class="mb-3">
+            <label for="productName" class="form-label">Product Name</label>
+            <input type="text" name="productName" id="productName" class="form-control" value.bind="product.title">
+        </div>
+
+        <label for="price" class="form-label">Price</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="dollar-sign">$</span>
+            <input type="text" name="price" id="price" aria-describedby="dollar-sign" class="form-control" value.bind="product.price">
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" value.bind="product.description" rows="8"></textarea>
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-primary" click.trigger="save()">Save</button>
+        </div>
+    </div>
+</div>
