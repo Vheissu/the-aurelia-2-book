@@ -1,9 +1,9 @@
 import { resolve } from 'aurelia';
 import { IAuthService } from '../../services/auth-service';
 import { IApiService } from '../../services/api-service';
-import { IRouteableComponent } from '@aurelia/router';
+import { IRouteViewModel } from '@aurelia/router';
 
-export class StoreOrder implements IRouteableComponent {
+export class StoreOrder implements IRouteViewModel {
     private api: IApiService = resolve(IApiService);
     private auth: IAuthService = resolve(IAuthService);
 
@@ -11,7 +11,7 @@ export class StoreOrder implements IRouteableComponent {
 
     
 
-    public async load(parameters: {id: string}): Promise<void> {
+    public async loading(parameters: {id: string}): Promise<void> {
         if (parameters.id) {
             this.order = await this.api.getOrder(this.auth.getCurrentUser().id, parameters.id);
 

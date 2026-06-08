@@ -1,13 +1,13 @@
 import { lifecycleHooks, resolve } from 'aurelia';
-import { Navigation, Parameters, RoutingInstruction } from '@aurelia/router';
+import { Params, RouteNode } from '@aurelia/router';
 import { IAuthService } from './services/auth-service';
 
 @lifecycleHooks()
 export class AuthHook {
     private auth: IAuthService = resolve(IAuthService);
 
-    canLoad(viewModel, params: Parameters, instruction: RoutingInstruction, navigation: Navigation) { 
-        const routeData = instruction?.match?.data ?? {};
+    canLoad(vm: unknown, params: Params, next: RouteNode, current: RouteNode | null) {
+        const routeData = next.data ?? {};
 
         if (routeData.admin && !this.auth.isAdmin) {
             return '/login';

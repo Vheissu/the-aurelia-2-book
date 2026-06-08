@@ -1,5 +1,5 @@
-import { IRouteableComponent } from '@aurelia/router';
+import { IRouteViewModel } from '@aurelia/router';
 
-export class StoreDashboard implements IRouteableComponent {
+export class StoreDashboard implements IRouteViewModel {
 
 }

@@ -22,7 +22,7 @@ export class ApiService {
         })
     }
 
-    // Gets all projects from the API
+    // Gets all products from the API
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async getProducts(): Promise<any[]> {
         const response = await this.http.get('/products');

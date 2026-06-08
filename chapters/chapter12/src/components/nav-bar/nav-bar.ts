@@ -24,4 +24,9 @@ export class NavBar implements ICustomElementViewModel {
             this.cartTotal = this.api.getCartTotal();
         });
     }
+
+    unbinding(): void {
+        this.cartAddSubscription.dispose();
+        this.cartRemoveSubscription.dispose();
+    }
 }

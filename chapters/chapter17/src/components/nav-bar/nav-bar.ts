@@ -34,4 +34,9 @@ export class NavBar implements ICustomElementViewModel {
     showSearch(): void {
         this.ea.publish('search:open');
     }
+
+    unbinding(): void {
+        this.cartAddSubscription.dispose();
+        this.cartRemoveSubscription.dispose();
+    }
 }

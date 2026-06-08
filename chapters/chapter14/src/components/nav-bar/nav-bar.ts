@@ -30,4 +30,9 @@ export class NavBar implements ICustomElementViewModel {
     logout(): void {
         this.auth.logout('/');
     }
+
+    unbinding(): void {
+        this.cartAddSubscription.dispose();
+        this.cartRemoveSubscription.dispose();
+    }
 }

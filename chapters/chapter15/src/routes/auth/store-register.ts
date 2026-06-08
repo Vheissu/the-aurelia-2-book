@@ -1,8 +1,8 @@
 import { resolve } from 'aurelia';
 import { IAuthService } from './../../services/auth-service';
-import { IRouteableComponent, IRouter } from '@aurelia/router';
+import { IRouteViewModel, IRouter } from '@aurelia/router';
 
-export class StoreRegister implements IRouteableComponent {
+export class StoreRegister implements IRouteViewModel {
     private router: IRouter = resolve(IRouter);
     private auth: IAuthService = resolve(IAuthService);
 

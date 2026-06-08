@@ -43,16 +43,19 @@ export class MyApp {
             id: 'dashboard',
             path: 'dashboard',
             component: () => import('./routes/store-dashboard/store-dashboard'),
+            data: { auth: true },
         },
         {
             id: 'orders',
             path: 'orders',
             component: () => import('./routes/store-orders/store-orders'),
+            data: { auth: true },
         },
         {
             id: 'order',
             path: 'order/:id',
             component: () => import('./routes/store-orders/store-order'),
+            data: { auth: true },
         },
     ];
   }

@@ -1,6 +1,6 @@
 import { resolve } from 'aurelia';
 import { IApiService } from "../../services/api-service";
-import { IRouteableComponent } from "@aurelia/router";
+import { IRouteViewModel } from "@aurelia/router";
 
 import { newInstanceForScope } from "@aurelia/kernel";
 import {
@@ -10,9 +10,9 @@ import {
 import { IValidationRules } from "@aurelia/validation";
 import { IRouter } from "@aurelia/router";
 
-const sleep = (ms: number) => setTimeout(() => Promise.resolve(), ms);
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export class StoreCheckout implements IRouteableComponent {
+export class StoreCheckout implements IRouteViewModel {
     private api: IApiService = resolve(IApiService);
     private router: IRouter = resolve(IRouter);
     private validationController: IValidationController = resolve(newInstanceForScope(IValidationController));

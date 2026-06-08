@@ -1,9 +1,9 @@
 import { resolve } from 'aurelia';
-import { IRouteableComponent } from '@aurelia/router';
+import { IRouteViewModel } from '@aurelia/router';
 
 import { IApiService } from '../../services/api-service';
 
-export class AdminProducts implements IRouteableComponent {
+export class AdminProducts implements IRouteViewModel {
     private api: IApiService = resolve(IApiService);
 
     private products = [];

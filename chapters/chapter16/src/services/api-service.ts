@@ -22,7 +22,7 @@ export class ApiService {
         })
     }
 
-    // Gets all projects from the API
+    // Gets all products from the API
     async getProducts(): Promise<any[]> {
         const response = await this.http.get('/products');
         

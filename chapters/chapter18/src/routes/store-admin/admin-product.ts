@@ -1,17 +1,17 @@
 import { resolve } from 'aurelia';
-import { IRouteableComponent } from '@aurelia/router';
+import { IRouteViewModel } from '@aurelia/router';
 import { IHttpClient } from '@aurelia/fetch-client';
 
 import { IApiService } from '../../services/api-service';
 
-export class AdminProduct implements IRouteableComponent {
+export class AdminProduct implements IRouteViewModel {
     private api: IApiService = resolve(IApiService);
     private http: IHttpClient = resolve(IHttpClient);
 
     private product;
     private image;
 
-    public async load(params: { id: string }): Promise<void> {
+    public async loading(params: { id: string }): Promise<void> {
         const request = await this.http.fetch('https://api.thecatapi.com/v1/images/search?mime_types=jpg');
         const response = await request.json();
 
